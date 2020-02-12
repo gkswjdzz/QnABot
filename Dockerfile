@@ -1,6 +1,6 @@
 
   
-FROM rackspacedot/python37:latest
+FROM pytorch/pytorch:latest
 
 CMD ["bash"]
 

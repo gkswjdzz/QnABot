@@ -51,7 +51,7 @@ BERT_CONFIG_NAME = 'bert_config.json'
 TF_WEIGHTS_NAME = 'model.ckpt'
 
 def gen_upper_triangle(score_s, score_e, max_len, use_cuda=False):
-    use_cuda = False
+    #use_cuda = False
     batch_size = score_s.shape[0]
     context_len = score_s.shape[1]
     # batch x context_len x context_len

@@ -96,7 +96,7 @@ class InferCoQA():
 		self.model_path = model_path
 		self.tokenizer = BertTokenizer.from_pretrained(model_path, do_lower_case=lower_case)
 		self.model = BertForQuestionAnswering.from_pretrained(model_path)
-	#	self.model.cuda()
+		self.model.cuda()
 		self.model.eval()
 
 	def predict(self, contenxt, question, prev_ques, prev_answ):
@@ -114,9 +114,9 @@ class InferCoQA():
 		coqa_dataloader = DataLoader(coqa_data, sampler=coqa_sampler, batch_size=1)
 		all_results = []
 		for input_ids, input_mask, segment_ids, example_indices in coqa_dataloader:
-			#input_ids = input_ids.cuda()
-			#input_mask = input_mask.cuda()
-			#segment_ids = segment_ids.cuda()
+			input_ids = input_ids.cuda()
+			input_mask = input_mask.cuda()
+			segment_ids = segment_ids.cuda()
 
 			
 			with torch.no_grad():
