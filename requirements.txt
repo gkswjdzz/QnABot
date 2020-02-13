@@ -1,5 +1,5 @@
 pytorch-pretrained-BERT==0.6.1
-torch==1.0.1.post2
+#torch==1.0.1.post2
 flask
 git+https://github.com/huggingface/pytorch-pretrained-BERT.git
 spacy
