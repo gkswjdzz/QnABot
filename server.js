@@ -1,10 +1,8 @@
 var express = require("express"),
-  cors = require("cors")
-const { spawn } = require('child_process')
-
+  cors = require("cors"),
+  fs = require("fs")
 var request = require('request-promise-native')
 var app = express()
-app.use(express.static('static'))
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 app.use(cors({
@@ -12,10 +10,11 @@ app.use(cors({
 }))
 
 var table = {}
+var context = fs.readFileSync('./sentences.txt', 'utf8');
 
 app.post('/chat/create/', (req, res) => {
   const bot_id = req.query.bot_id
-  const context = req.body.context
+  //const context = req.body.context
 
   console.log(bot_id, context)
 
@@ -51,7 +50,7 @@ app.get('/chat', async function (req, res) {
     console.log('Here1')
     const prev_q = table[bot_id]['prev_q']
     const prev_a = table[bot_id]['prev_a']
-    const context = table[bot_id]['context']
+    //const context = table[bot_id]['context']
         
 
     if(bot_id in table){
@@ -82,32 +81,6 @@ app.get('/chat', async function (req, res) {
             reject(e);
         }
       })
-        //context = table[bot_id]['context']
-        
-        // let result = '';
-        // console.log(question, prev_q, prev_a, context)
-        // var process = spawn('python', [
-        //   '/workspace/iq.py',
-        //   context,
-        //   question,
-        //   prev_q,
-        //   prev_a,
-        // ])
-        // process.stderr.on('data', data => {
-        //   console.log(data)
-        // })
-        // process.stdout.on('data', data => {
-        //   console.log('Here2')
-        
-        //   result += data.toString()
-        // })
-        // process.on('close', (code) => {
-        //   console.log('Here3')
-        //   table[bot_id]['prev_q'] = question
-        //   table[bot_id]['prev_a'] = result
-        //   res.send(result)
-        //   resolve(result)
-        // })
     }else{
       res.writeHead(400)
       res.end()
