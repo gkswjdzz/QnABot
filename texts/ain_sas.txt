@@ -1,0 +1,208 @@
+-
+
+Blockchain for Serverless Computing
+Background
+AI Network was highly motivated by the idea behind Ethereum’s Turing completeness and world computer. A network in which every node verifies code execution can provide unprecedented security and immutability in the permissionless network. As of now, the consensus mechanism’s speed is limited to 15 transactions per second (TPS). When Ethereum 2.0 is launched, transaction speed is projected to increase to around 3K ~ 15K TPS. This would enable the network to handle a decent amount of global financial transactions. Despite the considerable improvement, this number still remains wholly inadequate in terms of being capable of handling operations for all projected global applications. By design, scalability of Ethereum is limited by its own strength which can be summarized as statefulness, trustlessness, and serialized operation.
+When designing modern serverless architecture, applications achieve high scalability through statelessness, permission, and concurrent operations. By decoupling computation from blockchain, AI Network can perform large scale operations in a serverless architecture. At the same time, AI Network blockchain is designed as a lightweight ledger that can process millions of transactions per second and safely record communication between clients and workers. The detailed differences between AI Network, blockchains, and serverless architectures are described in the following diagram.
+
+
+
+Blockchain
+Serverless
+AI Network
+Operation
+Stateful
+Stateless
+Balance/Rules/Trigger State: Stateful
+Value State: Stateless
+Access
+Permissionless
+Permissioned
+Blockchain Validator: Permissionless
+Trigger: Permissioned/Permissionless (configurable)
+Storage
+Persistent
+Ephemeral
+Persistent
+Network
+Distributed
+Decentralized
+Distributed
+Scalability
+Low
+High
+High
+Latency
+High
+Low
+Low
+Data Capacity
+Low
+High
+High
+Concurrency
+Serialized
+Concurrent
+Concurrent
+Language
+Monoglot
+Polyglot
+Polyglot
+Table . Comparison between blockchain, serverless, and AI Network. AI Network uses blockchain as a lightweight communication channel and adapts serverless architecture for computation.
+Blockchain as Function as a Service (FaaS)
+
+Fig. EVM runs contracts and contracts need not to be managed by developers once they are deployed. In this respect, Ethereum can be viewed as a very slow and expensive Function as a Service. Unlike monoglot Ethereum, AI Network runs a variety of languages on heterogeneous types of runtime environments. We refer to these environments as Secure Runtime Environment, or SRE for short.
+
+Function as a service (FaaS) is a platform allowing customers to develop, run, and manage application functionalities without the complexity of building and maintaining the infrastructure. Although FaaS is often used as a category of cloud service, it is interesting to notice that Ethereum can also provide similar characteristics. Especially, Web IDEs for solidity such as remix (https://remix.ethereum.org) enable developers to develop Solidity contracts straight from the browser, and then deploy to Ethereum network. Once it is deployed, EVM in Ethereum nodes run the functions, and developers don’t have to worry about maintaining the infrastructure. Furthermore, unlike cloud functions that can be stopped and modified as developers require, deployed functions are managed forever, unless the function has exposed the self-destruction method.
+Despite the similarities, Ethereum is far from a general purpose FaaS because (1) It only supports Solidity. (2) Operations are expensive. (3) It can only interact with Ethereum’s internal state, and cannot call other components such as external databases and APIs. 
+AI Network deploys functions to the blockchain just like Ethereum, but it can also (1) support all available languages and framework, (2) cost less than major cloud services, and (3) can interact with off-chain components if necessary.
+
+
+
+
+Fig. Ethereum supports only one language (Solidity) and one virtual machine (EVM), and all nodes execute the same transactions. AI Network can support multiple languages and several types of SREs host different types of functions. While blockchain records transactions, execution for the transaction happens on off-chain worker nodes.
+
+AI Network Architecture
+While most of the blockchains today try to have all components necessary for smart contracts inside their networks, AI Network divides them into three components: storage, communication, and computation. AI Network blockchain is responsible for recording communication in order, and computation happens on off-chain components, so-called AIN Functions on top of Secure Runtime Environment (SRE). Big Storage is an adapter which gathers different types of storage such as Amazon S3, Google Cloud Storage, and IPFS. More sophisticated reasoning behind this architecture is described in the whitepaper. This document’s focus will be on the technical specification of the event-driven architecture between AIN blockchain and AIN Functions.
+
+AI Network Blockchain
+AI Network blockchain is responsible for managing uploaded programs, resource providers, and incoming requests from clients. AIN blockchain design principles are as follows:
+Asynchronous & Stateless: All Ethereum smart contract operations are stateful, and contract calls cannot be executed in parallel. AIN blockchain starts operation by setting a value for the path in the blockchain's database. Each worker for this operation then records their result in this designated path. Unless there are duplicated attempts to change the value of the path at the same time, operations can run in parallel. 
+Composable: Developers often use third-party API to enhance the application’s features, but maintaining upgrades from different API providers is not an easy task. In the worst case, API providers may switch their billing plans or deprecate old APIs which may be critical to operating applications. AI Network functions can become ownerless like blockchain smart contracts, and developers no longer have to worry about functions being modified unexpectedly. This enables developers to design stable microservice architecture for their applications.
+Lightweight & Fast: Transactions store a very small amount of data (~250bytes), which is transmitted to the network through a gossip protocol. While blockchain nodes are capable of quickly recording these lightweight transactions at scale, workers are also free to join anytime and can start processing jobs triggered by the blockchain state change.
+Sharding: AIN blockchain stores database state in a tree structure. This allows the database to be easily partitioned into multiple sub-trees. Besides genesis PoS rules, each partitioned sub-tree may define its own consensus rules and maintain small blockchain for each sub-tree.
+
+
+AI Network works as application backend. The lifecycle of application request is as follows.
+Client (dApp) sends transactions to blockchain
+Block state of blockchain node is updated by the transaction.
+Block state listener listens to the path and triggers event to the worker.
+AIN workers executes functions for the path and may generate another transactions. If it generates another transaction it goes to (2) and updates block state.
+Dapp registers listener to the blockchain data and gets result through the modified blockchain state.
+
+
+Transactions (seonghwa)
+Each transaction results in the state transition, and the transaction can be categorized into two types: money transfer & key-value transaction.
+From: 0x7e17...3f9eca
+Time: 3 seconds ago
+Nonce: 606380
+Amount: 10 (0 when the data field is used)
+Data: (empty when the transaction is for transfer)
+Tx-Fee: Stake
+Data may include one of the following information.
+SetValue: follow/{from}/{to} => true
+(optional) read_concern: n => suggest the value is recommended to be read after n block confirmation
+Trigger: follow/{from}/{to} => Function Hash
+Rules: follow/{from}/{to} => {.write: pk}
+
+Rules (seonghwa)
+….
+Block generation (lia)
+Transactions are grouped every 5 seconds and attached to AI Network blockchain. Consensus Algorithm: Proof-of-Stake (PoS)
+
+Block State
+Each node maintains block state by parsing all blockchain data gathered prior to the current timestamp. Block state includes (1) balance of each public key, (2) key and value database. The key value database can be modified by SetValue transactions. The SetValue transaction can be triggered initially by the client, and designated AIN Triggers watching the corresponding path can generate additional SetValue transaction. 
+
+// block 생성될 때 기준 state + pending transaction state 만들어지는 절차 추가..
+Read Concern
+Transactions may specify read concern to indicate recommended block confirmation for the value to be valid. Even 0 confirmation can be used if the reverted operation does not cause significant flaws. For example, if the user clicked ‘like’ operation, it might be a good idea to update UI for the like count right after the interaction has happened if the broadcasted event can be accepted most of the time. In the worst case scenario, the like count shown in the UI may not be included in the block, but normally, this is not the end of the world.
+
+
+Fig. a/e/g is not included in the block state as it is recommended to be read after 1 block confirmation. read_concern 0 does not guarantee this value will be in the block, but it still can be useful to the application which requires an immediate response. 
+
+If multiple transactions try to modify the same path, only the last one is valid. For example, if tx1 is {a/b: 1} and tx2 is {a/b: 2}, the last value 2 is the one that is valid. This applies to the read_concern as well. If tx1 is {a/b: 1, read_concern: 1} and tx2 is {a/b: 2, read_concern: 2}, a/b path is not recommended to be read until 2 block confirmations.
+
+
+Serverless Computing and AIN Functions
+In traditional server-based computing, users need to prepare the server, install OS and necessary drivers and software. Then, users need to manage servers and take care of hardware and software upgrades. To maintain highly-available and scalable servers, users also need to configure load-balancers. The idea behind serverless computing is for developers to focus on writing application code.
+
+
+Figure1. AIN Triggers listen for value changes of specific paths in the blockchain state. When a trigger is invoked, AIN workers generate additional transactions as a result. These additional transactions may subsequently trigger other workers if necessary.
+
+The AIN Functions for AI Network allow automatic execution of back-end code in response to two types of events: (1) Blockchain state changes. (2) HTTP endpoint calls. The code and related data are stored in Big Storage and runs in a managed environment of AIN worker.  The detailed examples for running machine learning using Big Storage and workers are described in architecture paper. Developers do not need to manage and resize the server by themselves. Unlike EVM executed by the on-chain node, AIN triggers consist of off-chain workers.
+Characteristics
+Serverless: No need to manage server configuration. The code is publicly deployed instantly
+Configurable ownership: Deployed program can be managed by different owners. It is possible to deploy fully ownerless function. It means authors may not have permission to modify or destroy deployed function.
+
+Developer Experience
+Step 1. Open source code from http://cloud.ainetwork.ai
+Step 2. Edit / Run code using Web IDE 
+Step 3. Deploy when it is ready. The following items are required when deploying a function.
+Runtime. i.e.) Tensorflow, Node.js 8
+Trigger type
+HTTP
+Endpoint
+AI Network Blockchain
+Path
+Function
+
+Node
+
+Fig. A node may host both the blockchain server and worker server so that it can respond to the transaction immediately. The worker part is detachable and hosted by another machine as it can establish a channel to the blockchain state from the other node.
+
+What can we do with AIN Functions?
+Developers can use AIN Functions to modify the blockchain state, with scalable computing power, in response to blockchain events. While applications can use AIN functions to compute arbitrary operations, common use cases can be categorized as:
+
+Application Backend
+Each operation can be defined as a function and groups of functions can serve entire applications. This type of backend infrastructure is is often called microservice architecture.
+dApp backend
+Since smart contracts have a limited capacity, many dApps these days handle only a small part of the application using a smart contract. The rest of the application is managed through centralized cloud services. Using AIN Functions, native AIN coin can be used to get access to cloud resources in a decentralized way.
+Run intensive tasks in the cloud such as machine learning
+A training process can be decomposed into small batch jobs and many workers can join forces to build the large model.
+Integration with third-party services and APIs
+스마트 컨트랙의 단점 third-party 연동. A function is a place where the blockchain state meets external resources. Workers who execute functions may call third-party services and APIs to generate the result.
+Notify users when something interesting happens
+Transactions generate events for the specific path and workers can respond to corresponding events. The worker may call external notification services to notify users about interesting events.
+
+
+
+AI Network Blockchain Scalability 
+An application in AI Network may generate millions of transactions and many of them are not directly related to other applications. If full nodes maintain one giant tree, it can grow very large. AI Network blockchain solves scalability issue by partitioning the global state tree into several sub-tree states.
+
+There are three areas of scaling: data scaling, computation scaling, and state scaling. While the most of EVM based blockchains have to deal with all three areas and suffers from sharding them, AI Network blockchain can be only concerned with the state sharding because blockchain’s responsibility is limited to state management only. In AI Network blockchain, data and computation are managed off-chain, and computation is triggered by the state change. The state is a tree structure, which can be easily partitioned.
+Sharding
+A shard in AIN blockchain maintains a subset of the global state tree. Each of the multiple shards is processed on a separate small blockchain instance, thus greatly increasing a blockchain’s total throughput.
+
+Each shard validates a small part of the transaction history. It is known that POW consensus algorithm can’t be used in conjunction with sharding. This is because the computation power required to attack a shard is significantly less than the computing power required to attack the entire blockchain. Thus proof of stake (PoS) consensus algorithms are used for each shard, and only designated nodes who is authorized to commit their stakes are allowed to participate in block validation. 
+
+The state tree is partitioned into relevant subtree and transactions for the subtree are recorded in a child block. Once the child blocks are branched out from the parent blocks, the small headers of child blocks have to be recorded on the main chain.
+Branch and report
+For forking shard chains from the parent chain, a child first records branch transaction into the parent chain. Branch transaction includes the subtree path it wants to be in charge and the rules for reporting block headers as the new chain grows. After the branch transaction included in the parent chain, validators in the child chain are responsible for processing transactions regarding data for subtree state. The branch transaction creates a new genesis block for the child chain which includes the consensus rule for managing the new branch. When the forger of the child chain broadcast the new block, the forger generates report transaction for recording the header of the block into the parent chain. The child block can generate one report transaction per block while the parent block can include multiple report transactions from different shards.
+
+
+
+Fig. The diagram shows how the child state is branched from the root chain. After the branch, the child paths are managed by the child chain and only the header hash is recorded in the root state.
+
+
+Fig. The diagram shows how multiple children can report to the parent block. The branch can be recursive. For example, child 1-1 is a child of child 1 which is the child of the root.
+
+
+AIN Trigger Scenarios
+
+Simple request and response
+Initialization
+Client: {op: “set_rule”, path: “deposit/deposit_pk”, value: {.transferable: auth.pk === worker_pk && job/result.length() > 10000 .admin: immutable}}
+{op: “set_rule”, path: “job/request”, path: {.write: auth.pk === client_pk .admin: immutable}}
+{op: “set_rule”, path: “job/result”, path: {.write: auth.pk === worker_pk .admin: immutable}}
+
+Upload packaged function (file)  to Storage => result: function_hash
+Runtime: Nodejs
+Code
+ain_blockchain.onWrite(ref,function (key, a, b) {
+  ain.sendTransaction({op: “set_value”, `job/result/${key}`, a + b})
+}
+{op: “set_trigger”, “job/request/${key}”, function_hash}
+Client: Transfer 10 to deposit/deposit_pk
+
+Job request
+Client: {op: “set_value”, “job/request/key_1”, {a: 10, b:10}}
+
+Job result
+Worker: {op: “set_value”, “job/result/key_1”, 20}
+
+Payment
+Worker: Transfer 10 from deposit/deposit_pk to worker_pk 
+
+
+Reference
+Beigepaper: An Ethereum Technical Specification  https://github.com/chronaeon/beigepaper/blob/master/beigepaper.pdf

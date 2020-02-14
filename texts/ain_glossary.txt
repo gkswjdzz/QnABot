@@ -1,0 +1,34 @@
+AI Network Glossary
+
+Peer-to-peer (P2P)
+A peer-to-peer network is a group of participants (nodes) that communicate and share resources with each other directly. A P2P network differs from the client-server model of network in that it doesn’t require central coordination. The nodes follow certain rules of communication to both supply and consume resources within the network. 
+Blockchain protocol
+A protocol is simply a set of rules that two or more participants follow to communicate among them. A blockchain is a public ledger (record of transactions) that nodes (participants) of a peer-to-peer network monitor and document together. In order to do so, a P2P network needs a blockchain protocol that defines agreed upon procedures, which may include selecting block producers, how and how often a block is produced, and so forth.
+Deep Computer
+Deep Computer is a partially-decentralized computer that utilizes global computing power to solve various Machine Learning problems that would be challenging or even impossible to run as an individual. It is composed of three main components: Secure Runtime Environment, Big Storage and AI Network. Unlike the completely decentralized “world computer” that Ethereum claims to be, Deep Computer uses a blockchain only to establish trust within the network, and lets other systems and services take care of carrying out heavy Machine Learning computations and storing relevant data.
+Heterogeneous vs. Homogeneous
+“Homogeneous” hash computations that many blockchain nodes perform require a processor that’s tailored to a job such as bitcoin mining. In contrast, training ML models benefit greatly from utilizing multiple computing elements, namely CPU, GPU, TPU, FPGA, and so on. This type of computing systems involving multiple processors with different architectures is called heterogeneous computing.
+SHA-2
+SHA-2 is a family of cryptographic hash functions developed by the United States National Security Agency (NSA) and National Institute of Standards and Technology (NIST) [1]. A cryptographic hash function takes in arbitrary length of input data and returns a fixed size (224, 256, 384 or 512 bits, depending on the algorithm) hash value. It is designed to produce unique and uncorrelated hash values in such a way that even a slightest change in the input data results in a drastically different hash value. In fact, SHA-256, one of the SHA-2 algorithms, is used for verifying transactions in several blockchain protocols including Bitcoin.
+[1] Wouter Penard and Tim van Werkhoven. On the Secure Hash Algorithm family. Accessed July 1, 2018.
+NP
+In computational complexity theory, problems are often reduced to decision problems where the answer is either “yes” or “no, ” and these decision problems can be classified as P, NP, NP-complete and NP-hard. A problem is in NP if it’s not efficiently solvable-which means it cannot be solved in polynomial time in terms of its input size. However, if someone gives you an answer to the problem, you have a proof that can efficiently determine whether the answer is correct or not. Similarly, ML problems are not efficiently solvable (cannot be solved in polynomial time), but once you have an answer, it is relatively easy to verify the solution (can be proved in polynomial time). [2]
+ [2] https://en.wikipedia.org/wiki/NP_(complexity)
+RPC ledger
+RPC, short for Remote Procedure Call, is how a process on a machine executes code on another “remote” machine and receives the results back, whereas a  regular “local” procedure call is made between a pair of processes within a machine. A blockchain is a RPC ledger as it is publicly accessible through RPCs.
+Sandbox
+Sandboxing is executing code in a separate and controlled environment to prevent untrusted code from affecting and possibly harming the hosting machine. In Deep Computing system, it is imperative that nodes can execute unverified code without risking their security, and sandboxing will provide the necessary protection.
+Swarm
+Swarm is a distributed storage platform and content distribution service being developed for Ethereum. It is envisioned to be a P2P solution that stores code and data related to DApps, blockchain, and the system’s state. Swarm nodes are expected to be sufficiently incentivized to provide the storage and serving the community demands [3]. 
+[3] https://swarm-guide.readthedocs.io/en/latest/introduction.html
+Whisper
+Whisper is a P2P communication protocol for Ethereum DApps. Unlike other traditional protocols like TCP/IP or HTTP, Whisper is designed to let users make trade-offs between bandwidth/latency and privacy. Ethereum Wiki claims that Whisper is capable of sending and receiving “dark messages” without any leakage of information if the user is willing to sacrifice the bandwidth and latency to a significant degree [4, 5].
+[4] https://github.com/ethereum/wiki/wiki/Whisper
+ [5] https://github.com/ethereum/wiki/wiki/Whisper-PoC-2-Protocol-Spec
+Big storage
+Big storage is one of the three main components of Deep Computer. It aggregates centralized and decentralized data storage services that different service providers offer, and each AIN node can pay to reserve spaces needed for sharing job related data (i.e. input and output of a ML problem). [+ key differences b/w swarm and big storage]
+Secure Runtime Environment (SRE)
+Secure Runtime Environment is a language-agnostic sandboxed programming environment that will be provided by multiple hosting nodes. In a SRE, a Binary Manager oversees the authentication, deployment, updates, and notifying of binaries. From a SRE, evaluators and workers will be able to download Job Schema binaries that admins uploaded.
+TensorFlow
+TensorFlow is a software library for high performance numerical computation [6]. Originally developed by Google, it is now an open source project that numerous big and small companies use for their ML and AI application developments.
+[6] https://www.tensorflow.org/

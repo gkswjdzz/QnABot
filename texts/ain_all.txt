@@ -1,0 +1,1329 @@
+AI Network Architecture Paper
+A blockchain designed to manage P2P computation cloud
+Last updated on June 29th, 2019
+Contents
+1 Introduction 1
+1.1 Vision 1
+1.2 Background 2
+2 System Architecture 3
+2.1 Deep Computing Architecture 3
+2.1.1 Overview 3
+2.1.2 History 3
+2.1.3 Technical Challenges 4
+2.1.4 Execution Correctness and Solution Correctness 5
+2.2 Solution 6
+2.2.1 Secure Runtime Environment 7
+2.2.2 Big Storage 8
+2.2.3 AIN Blockchain Protocol 8
+2.2.4 Machine Learning Patterns on AIN protocol 18
+2.2.5 Security 21
+3 Sample User Experience 23
+1 Introduction
+1.1 Vision
+Build a global computer network where anyone can provide and compose cutting edge solutions
+with open access to shared computing resources in a cost-effective way.
+1
+1.2 Background
+There is a plethora of cloud-based managed computing platforms operated by large companies
+such as Amazon, Google, IBM, Microsoft, etc. By leveraging economies of scale via
+centralization, these companies provide cost-effective computing solutions for enterprises.
+However, the rigidity of such centralized resource management serve as a barrier to entry for
+individual developers and small-scale research groups. The following are the three major
+challenges of AI development in a resource constrained environment.
+First, large-scale Machine Learning (ML) problems are often expensive and requires complex
+settings. When cutting-edge ML research papers are published, results are often difficult to
+replicate. Even when results are replicable, it can sometimes takes a very long time to train the
+models. In our platform, runtime environments are shared together with code so that anyone
+can efficiently access and improve ML solutions.
+Second, private clouds established by small research groups or companies do not operate
+cost-effectively. In addition to research, private clouds are needed for running ML jobs across a
+diverse range of domains. Once a private cloud is set up, it's often the case that only a small
+number of researchers use this cloud at any given time. This means cloud resources are not
+always fully utilized. We would like to provide ways to save idle computing resources in a form
+that they can be utilized later when it's needed. For example, if one lends its computer power
+during the night, it can run 2x computer power during the day.
+Third, big AI companies often reserve their most powerful resources primarily for themselves
+first. For example, these companies may make new hardware accessible only to privately
+selected customers before general release. In such cases, small customers may have no other
+option than to accept the vendor's policy even though it doesn't fit well to the customers' needs.
+We propose a neutral market where innovative solutions can be run and sahed independently
+from central providers.
+We believe that blockchain can provide this neutral market for sharing computing resources
+without the limitations of centralized vendors. Here are some of the benefits that different
+participants of blockchain network can gain:
+1. Miners can run jobs which may be more profitable than mining.
+2. Researchers can easily access state-of-the-art solutions and run them effortlessly.
+3. Server Farms can reduce resource idle time and maximize the performance during
+active time.
+By exploiting the key properties of blockchain such as transparency and decentralization, we
+want to make a paradigm shift from dedicating massive amounts of computing resources to
+mining (i.e., running identical hash operations in parallel) to building a federation of distributed
+computing resources that solves real-world computing problems.
+2
+2 System Architecture
+2.1 Deep Computing Architecture
+2.1.1 Overview
+In this section, we will outline the technical details of Deep Computing Architecture. This
+architecture is a distributed P2P cloud that can solve large heterogeneous problems with
+minimal centralized control. At the center of the blockchain protocol, AIN cryptocurrency makes
+massive-scale computing accessible by allowing participants to spread and trade computational
+jobs amongst themselves. We take a hybrid approach to decentralization, combining the
+inherent decentralized characteristics of blockchain with centralized helper components (Secure
+Runtime Environment and Big Storage) for trustful distributed computing of high performance.
+We will discuss how to identify and trust the computation power of distributed machines with
+disjoint ownerships so that they can be assigned with proper jobs and rewarded with AIN.
+2.1.2 History
+Ethereum, a blockchain app platform, may be the most popular solution for solving centralized
+computing problems to date. Ethereum is often considered to be a "World Computer", in the
+sense that it runs smart contracts which no central entity can shut down. Ethereum also
+provides the Turing-complete virtual machine. This in principle allows any computational
+problem, including ML problems, to be solved through Ethereum. While we honor the value of
+pure P2P systems, we have a slightly different opinion about Etherium's roadmap roadmap for a
+"World Computer."
+In the vision of a fully decentralized web by Taylor Gerring, the co-founder of the Ethereum
+Foundation, three key components are mentioned: Contracts (decentralized logic), Swarm
+(decentralized storage), and Whisper (decentralized messaging).
+3
+Figure 1. Interaction including Ethereum contracts, Swarm storage, Whisper comms
+However, even the most advanced decentralized storage is much more expensive and slower
+than centralized storage. Furthermore, Ethereum smart contracts are too expensive and not
+expressive enough to represent complex programs such as ML algorithms.
+Practically, in a performance critical area, we believe that a decentralized ecosystem should be
+able to embrace the efficiency of centralized entities. We acknowledge that a blockchain can
+only contain small-sized information, so we let the blockchain take responsibility for establishing
+trust between entities while letting trusted protocols provide the other necessary services..
+2.1.3 Technical Challenges
+While the present proposed architecture could be applied to a wide variety of computing
+problems, we are initially focusing on the use of AIN for ML to explain the architecture with.
+Sharing computing resources in a P2P network is much more complicated than in a centralized
+system, as the former should be capable of dealing with various devices, different OS
+environments, unstable connection between peers, etc. By constraining the problem scope to
+ML, we distill the main challenges for AIN to the following:
+1. Heterogeneous Job Assignment. Unlike homogeneous hash computations, we need to
+be able to schedule and assign the requested jobs to appropriate computing nodes,
+since ML jobs demand various combinations of memory, storage size and computational
+hardware such as GPUs. How can we manage complex cloud computing environment
+such as TensorFlow Cloud by assigning jobs to trustful computers at reasonable
+operational costs?
+2. Trust and Security. The AIN network needs a way of verifying that the provided codes
+are harmless to the computation participants. Results of computational jobs also must
+4
+be evaluated to confirm that they are correct. In addition, the system needs to provide a
+scheme to distribute the profits to the honest participants of a problem.
+3. Computing and Network Performance. Due to the massive computation requirement and
+large data size of ML jobs, P2P cloud used to be an unpopular choice for distributed ML
+computing. Moreover, additional verification layers for trust and security can cause
+significant performance loss compared to a centralized system, so there should be a
+mechanism to minimize the verification overhead.
+2.1.4 Execution Correctness and Solution Correctness
+The main difference between Ethereum and Deep Computing lies in how computer resources
+are allocated for work and evaluation. Ethereum uses Ethereum Virtual Machine (EVM) to
+ensure the provided code is run correctly and sequentially. However, verifying every line of code
+with every computer in the blockchain network becomes inefficient and expensive when we
+apply the same approach to large applications. For instance, a large-scale optimization problem
+such as a neural network in deep learning might consist of weights, parameters, and coefficients
+which are not only great in size, but also dynamically change within a few iterations.
+Figure 2. The graph shows performance limitation as operations require more peer consensus
+We are normally not interested in the values for this meta-data during interim iterations. Rather,
+we want to see whether the final iteration produces a solution that satisfies the objective
+5
+function for the problem. In addition, processes of solving optimization problems usually
+includes randomness which might not return predictable results. In this case, it might be
+sufficient to track whether the model is approaching a satisfactory solution along some expected
+performance curve.
+For performance reasons, we adopted a worker / evaluator model where evaluators verify and
+rank solutions returned by many workers. Evaluation methods can vary depending on the
+problem characteristics. Some problems could be satisfied with a simple process that checks
+whether a solution meets the specified boundaries, while others could utilize a competitive
+process where evaluators accept the smallest loss in problem test data. Through customized
+evaluation and verification functions, jobs can consume minimal amount of resources by
+verifying what it needs. We roughly divided possible verification patten into three categories:
+solution verification, checkpoint verification and execution verification.
+1. Solution Verification. Although finding a solution for a NP problem may be extremely
+computationally expensive, verifying the solution may be doable in polynomial time.
+2. Checkpoint Verification. In order to monitor whether training operations are running as
+expected, multiple checkpoints during the execution need to be verified. The increased
+number of checkpoints can provide more solution credibility, at the cost of performance.
+3. Execution Verification. One may want to make sure all the lines of codes are executed
+properly. One obvious and easy way could be executing the same code again across
+multiple machines. If results are replicable across different machines, this increases
+credibility. Alternatively, more sophisticated techniques can be used for verifying the
+code itself. However this verification normally takes more resources than solution
+verification or checkpoint verification.
+2.2 Solution
+Our proposed "Deep Computing" solution is a decentralized computational platform that turns
+GPUs in the network into a global problem solver. Traditional Von Neumann Architectures
+require computers to contain a CPU, Memory, I/O, and communication between these
+components. Similarly, we identified three key components we deem essential for a Deep
+Computer: a secure runtime environment (centralized resource isolation and code verification),
+big storage service (decentralized storage system [doesn’t need to be fully P2P]), and
+blockchain (decentralized RPC ledger for reputation control of machines).
+6
+Figure 3. Left shows Von Neumann Architecture and right shows corresponding Deep Computing
+Architecture. Deep Computing including AIN protocol, Big Storage, Secure Runtime Environment
+(SRE)
+Blockchain defines communication protocol between nodes while tracking every public request
+between nodes. Processing this information can provide a measurement for reliability of each
+node, which we call reputation. It also gives reasonable control to centralized nodes and
+maintains the performance and scalability of distributed computing. With this hybrid approach,
+we can build a decentralized P2P cloud computation platform which is able to solve
+various-sized problems in a reliable and efficient way. In the following section, we will describe
+three main components: Secure Runtime Environment, Big Storage, AIN Blockchain Protocol.
+2.2.1 Secure Runtime Environment
+To secure user environment and run code on various environments, one needs to provide
+dynamic sandboxing and enforce resource constraints. The Backend.AI team is the first
+reference node that will provide a hassle-free backend for AI programming and services. It runs
+arbitrary user code safely in resource-constrained environments, using Docker and its own
+sandbox wrapper.
+Backend.AI provides a streamlined backend API server that hosts heterogeneous programming
+languages and popular AI frameworks. It manages the underlying computing resources for
+multi-tenant computation sessions where such sessions are spawned and executed instantly on
+demand.
+Backend.AI supports various programming languages and runtimes, such as Python 2/3, R,
+PHP, C/C++, Java, Javascript, Julia, Octave, Haskell, Lua and NodeJS, as well as AI-oriented
+libraries such as TensorFlow, Keras, Caffe, and MXNet. The implementation details can be
+found in https://github.com/lablup/backend.ai and more frameworks and languages will be
+added in parallel with this project.
+7
+Secure Runtime Environment contains Binary Manager whose role is to authenticate, deploy,
+and update binaries once they are distributed to the network. When new binaries are released
+by an admin, Binary Manager notifies the evaluators and the workers to download the new
+binaries from the Secure Runtime Environment.
+2.2.2 Big Storage
+Usually an ML job requires problem solving of large-scale input / output data. Furthermore, ML
+jobs run through decentralization requires efficient data transfer between the network nodes. As
+such, blockchain itself is not a good solution for storing ML job data, as the blocks are
+designed to have a limited size for efficiency. Instead, AI Network team will provide a general
+storage service, what we call Big Storage, that can be used for any type of data sharing or
+transfer between the nodes. For example, the client can share the input data with the workers
+and the evaluators, and the workers can share the output data with the client.
+For performance reasons, Big Storage is a centralized service that aggregates and allocates
+different storage services that service providers offer. However, its name service is designed to
+be universally visible from the blockchain API so that the API allows call-by-reference with only
+the data path in the storage space. Every node on the blockchain network needs to reserve
+appropriate space in Big Storage by paying fees to the storage service provider prior to the
+initiation of an ML job. For instance, an admin will reserve a space for the job scheme, a client
+will reserve space for the training and test data, and an evaluator and a worker may need to
+reserve temporary space during the job execution. The size of the available space in the
+storage space owned by the workers can be referenced by admins for job-worker matching, as
+some jobs require a certain amount of available storage for the output data.
+Basically Big Storage will serve content-addressed storage, i.e., the address is generated by
+applying a cryptographic hash function (e.g. SHA-2) to the uploaded content. This approach is
+good as 1) the shared data doesn't need to be updated once it's uploaded in most cases, and 2)
+no context on the data (including the owner) needs to be exposed in the address.
+For the clients who want to encrypt the uploaded data, Big Storage and Blockchain Protocol will
+provide appropriate encryption and decryption functionalities as well as secure ways to share
+the decryption keys only with those involved in solving the problem.
+When files are created in Big Storage, the file owners can specify the ttl (time to live) of the
+created files so that they can be automatically deleted after a specified period. This will facilitate
+efficient management of storage utilization.
+2.2.3 AIN Blockchain Protocol
+1) Terms
+8
+Role
+While each node is responsible for maintaining and validating blocks, nodes can also play
+certain roles for registering and executing other jobs. There are four types of roles in the AIN
+blockchain: admin, evaluator, worker, and client. The node who registers a new job schema is
+the root node, and as such is always an admin node.
+● Admins can accept other admins, evaluators, or workers. Admins can also hold the roles
+of worker and evaluator.
+● Evaluators validate solutions returned by workers, and assesses the workers'
+performance. Workers might receive different rewards depending on the results of the
+assessment and the reward function given by the client.
+● Workers execute operations and return solutions.
+● Clients request job execution to evaluators and workers, and offer rewards.
+Depending on delegation policy, Jobs can be centralized where only one root admin can
+validate the solution, or scales faster by replicating admins in many places who can accept
+more workers.
+Job Schema
+An admin defines a job schema in proto3, and submits its implementation to the binary
+manager. This schema will eventually be run by elevators and workers. The deployment of the
+binaries are done by the binary manager, as specified by the owner of the job schema.
+Reward
+An evaluator validates the results of the workers and assesses the worker's performance as a
+whole. Rewards are defined through a "reward function" and associated function parameters in
+the job request. For instance, a reward function may be defined as evenly distributed or as
+winner-only, depending on the types of problems and the client's preference.
+The client needs to prepare a proper strategy when choosing a reward function and function
+parameters to optimize the cost. AI Network team will provide a few example reward strategies
+for some of the common use cases.
+Deposit
+When an evaluator accepts an offer from a client, the evaluator is required to deposit a certain
+amount of credit. The deposit will be sent to the client if the client can prove the evaluation result
+was not correct. Deposit must be larger than the fees needed for challenging the evaluation
+result to the parent node. The details of the challenge process will be explained in a subsequent
+section.
+Fee
+Transaction fee exists to prevent from sending a lot of transactions in the purpose of failing the
+network without any cost. Since AI Network transactions are requests and responses for
+general purpose application, bandwidth allocation makes more sense than charging a fee for
+9
+each transaction. Holding tokens give the node to perform operations in the network, and a job
+can allocate some tokens to secure bandwidth it requires.
+2) Reputation in Blockchain
+The blockchain manages ledgers for communication between nodes. This communication
+includes registration of nodes, offering jobs, accepting jobs, returning results of jobs, evaluating
+the results, and distributing rewards. Blockchain maintains the specification of API,
+authentication and ranking of the nodes, offers and acceptances of the jobs, and reward
+distribution. By tracking this information, we can measure the reputation of each node. Node
+structure is hierarchical, where the root node has the highest authority to say the solution is
+correct. Thus, we call it the Reputation Tree (RTree).
+Figure 4. Blockchain can process multiple jobs, and users provide rewards to evaluator and
+worker for the provided result. Depending on the admin's node expansion policy, it can have
+multiple admins or multiple evaluators
+3) Blockchain API
+assignAddress
+A new address is assigned to the node. This is similar to creating a wallet in a typical
+blockchain. Public Key and Secret Key are generated. No Job can be run or managed yet.
+registerJob signed by admin
+10
+Register a new Job specification. The unique job ID will be created.
+PARAMETER
+job_specification (proto) The information about data, evaluator, and
+worker service.
+RETURNS
+job_id(string) Unique job ID.
+applyJob signed by node
+A node applies for a job. The node can apply for the role of either admin, evaluator, and worker.
+approveNode signed by admin
+When a node applies for a job, an admin node evaluates whether it can truly run the provided
+functionality using test data. If the admin is satisfied, the node is added as a child of the admin
+node.
+requestJob signed by client
+A client sends a job request to the blockchain network. A list of rewards is locked in the
+blockchain until the final evaluation is produced. If job_input is large, complementary data
+storage can be provided by AI Network team. If client specifically trusts certain evaluator or
+worker nodes, the client can specify these nodes.
+PARAMETER
+job_id (string) A unique id of the job to be executed.
+job_input (serialized_proto) The input data to the job. It may contain
+pointers to big storage.
+reward (Function) A reward function that will be given to the
+ranked worker
+time_limit An expected duration of job execution, in
+milliseconds, after an evaluator accepts the
+job.
+evaluator_node (list) [optional] Candidates that are allowed to participate in
+the evaluation process.
+11
+worker_node (list) [optional] Candidates that are allowed to participate in
+executing the job.
+skip_evaluation (boolean) [optional] When a client completely trusts a worker
+node, the client may skip evaluation. The
+default value is false.
+RETURNS
+transaction_id(string) Unique ID for created transaction.
+acceptJob signed by worker/evaluator
+Workers or evaluators can accept a job request if and only if they meet the criteria of the job.
+The data of the job request can be encrypted and ACL (Access-Control List) controlled. This will
+make the data only visible to the workers who accepted the job. The client may reject a worker
+if it doesn't like the worker's reputation.
+Workers can also take reputation of other workers into account when deciding whether to
+execute a job or not. For example, if a job gives the reward to only one worker who produced
+the best result, other workers might resign if highly competitive workers have already accepted
+the job.
+submitResult signed by worker
+Workers produce results and output these results onto the blockchain. The result might be
+recorded in the complimentary storage if it is too large. The storage provides data integrity at
+solution submission time.
+rank signed by evaluator
+After the job time limit has expired, the evaluator sorts the result and assigns a rank to each
+worker.
+acceptResult signed by client
+If the client is satisfied with the result, it accepts the result and promised rewards are distributed
+to the workers.
+challenge signed by client
+If the client or one of the contracted workers thinks the evaluation result is wrong, it can request
+a re-evaluation to the parent node. A challenge requires an additional fee, but this fee is
+compensated by the evaluator's deposit in the event that the evaluator was truly wrong.
+drop signed by admin
+12
+An admin node can drop one of its children if it thinks that the node is being dishonest. Dropped
+nodes cannot execute jobs any longer. Approving and dropping follows a certain rate limiting
+rule to prevent unexpected, injudicious drops.
+send
+A typical protocol to send coins between nodes.
+4) Scenarios
+13
+Figure 5. The diagram shows how jobs are registered and executed. The rewards for evaluators
+(E) and workers (W) are reserved in the network until the job is completed. Evaluator needs to
+deposit credit (D) to make sure it returns correct result.
+14
+Initialization Phase
+1. Admin broadcasts a job schema to blockchain. The binary to be used for the job schema
+is published in Secure Runtime Environment, and related data are stored in Big Storage.
+2. Evaluators who are interested in the job schema apply for the job schema. They
+download the binary from Secure Runtime Environment and data from Big Storage to
+test out whether they are capable of evaluating the job.
+3. Admin approves Evaluators once it verifies Evaluators are eligible for the job schema.
+4. Workers who are interested in the job schema apply for the job.
+5. Admin approves eligible workers.
+Execution Phase
+6. Client requests a job with rewards for evaluators and workers. Rewards are reserved on
+the blockchain network until the solution is returned.
+7. Evaluator approves the requested job and reserves deposit on the blockchain network.
+8. Workers accept and start job execution.
+9. Workers return the results.
+10. Evaluators evaluate the results.
+Resolution Phase
+At this point, Client can either accept (11) or challenge (12) the solution.
+11. Client accepts the result. The reserved rewards are distributed to workers and
+evaluators.
+12. Client challenges the solution. If Admin accepts the challenge (12-1), Client receives
+reward and deposit. If Admin rejects challenge (12-2), Client can either challenge again
+or rewards are distributed to workers and evaluators.
+15
+5) Execution Details
+16
+Figure 6. The diagram shows how jobs are evaluated or executed in a node's computer. The node
+identifies profitable jobs using blockchain and dashboard and participates in PoW if no profitable
+job is available.
+When the node joins the blockchain network, it will start receiving all blocks from its peers to
+establish valid Blockchain State. After initialization, it will monitor transactions broadcasted
+through the network and update the Blockchain State. Blockchain State contains Job pointers
+and Job Status, and the node can use them to find suitable jobs it can run in Dashboard. If
+some jobs are promising, it downloads the environment and binaries from Secure Runtime
+Environment. Machine State tracks computational powers and resources available and filters
+jobs that can be executed immediately. The node receives updates about job statistics and
+decides which jobs to run. After the node finishes the job, it uploads the job result to the Big
+Storage and broadcasts a pointer to the blockchain network.
+6) Configurable Permissions and Consensus Protocols
+AI Network blockchain uses Proof-of-Stake (PoS) for its main consensus protocol, which is
+influenced by Tendermint's BFT-based consensus algorithm. A major difference between AIN
+blockchain and Tendermint in terms of consensus protocols is that on AIN blockchain, it is the
+rules that drive the consensus process. The rules also specify who has the permission to
+change the process. The rule-driven architecture and the tree structure of the state make having
+multiple consensus protocols on AIN possible. In other words, the main consensus protocol
+dictates how blocks are forged on the main chain; however, each shard of the blockchain that
+manages only a subtree of the global state tree has the freedom to configure its own consensus
+rules.
+This means that if an app uses AIN blockchain as its database and wants to apply a different
+consensus algorithm for updating its db, for instance increase the number of validators, the
+nodes who have the permission to write the consensus rules for the shard may change the
+protocol within their network. The changes may need to be approved by a certain number of
+nodes that participate in maintaining the shard, depending on how the rules are set.
+The configurability of consensus protocols respects the needs and decisions of the groups of
+nodes that want to manage particular segments of the global state. More importantly,
+configurable permissions and consensus protocols allow a new sharding mechanism to be
+adopted where each shard manages its own partition of the state tree and even the main
+blockchain doesn’t need to keep track of all the data in the partitions. Consequently, the time to
+reach consensus shortens, and the amount of data that a node has to store decreases
+significantly as well.
+7) Dashboard
+By analyzing the transaction data in blockchain, the AI Network team will provide statistics for
+nodes and jobs. Admins, evaluators, workers, and clients can refer to these extensive statistics
+to decide whether to apply for jobs or accept applications.
+17
+For example, metrics could be profitability of job, the number of jobs processed, response time,
+acceptance / rejection ratio, and the number of managed nodes. Information like performance
+ranking could also be made available. One of the rating systems we consider is Elo rating where
+relative computation power is measured when two machines worked on a job together. Also,
+metrics can be configurable, and each job owner may want to make their own metrics which
+meet the characteristics of their job.
+2.2.4 Machine Learning Patterns on AIN protocol
+AIN protocol's job definition is general enough to accept a large spectrum of inputs and outputs.
+Although it is not limited to ML purposes, we will discuss possible patterns of ML using AIN
+protocol to help understand its usefulness. The examples here are limited to basic principles, so
+it could be used with more sophisticated techniques in the practices.
+1) Distributed Computing
+Blockchain tracks the communication between nodes, but does not have features for job
+management or auto-scaling. Despite this, the ultimate goal of this infrastructure is to distribute
+and assign jobs efficiently. Broadly speaking, we can make use of this infrastructure for
+distributed computing in two ways. We will provide basic boilerplate code for distributing jobs.
+First, a client can break down the job into small jobs and send multiple job requests to multiple
+targets. Tensorflow provides strong support for breaking down tensor graph into multiple pieces
+and runs the training on different devices or machines. Since sending job requests to
+blockchains is asynchronous and the result will be returned within a specified time limit, a client
+can contact with multiple evaluators to process the small jobs. If designed properly, even
+merging partial jobs into one can be done by using different job schemas on the blockchain.
+However, job distribution techniques should be implemented by a client using its own code. We
+believe our infrastructure is flexible enough to accommodate different types of job distribution
+methods. The AI Network team will provide references for how well-known distribution
+techniques can be implemented using Blockchain APIs.
+Second, one node can be composed of multiple computers. One node doesn't have to be
+always one computer. To get popularity in the blockchain, some nodes want to maximize their
+power by using their own computation cloud. There might be different implementations for the
+same job schema if the ML environments are various. The AI Network team will also work hard
+to provide a centralized cloud for processing large ML problems. The blockchain is not the only
+mechanism for getting attention from clients. Each node can have its own marketing channel by
+exposing their node pointer externally from the blockchain. For example, the AI Network team
+can be trusted not only because of jobs processed in history, but also by other resources such
+as code repository, or well-structured homepages that reveal the developer's identity. However,
+AI Network team's node is also competing under the same rule, and there's no guarantee that it
+will become one of the more popular nodes on the blockchain.
+18
+2) Optimizing Loss function
+Assume we want to optimize locally convex loss function L(w) where w is initial weight vector
+with random values. If workers use gradient descents, it will try L(w) -> 0 by randomly changing
+w with w := w – a (dL(w)/dw). Evaluator receives the results of workers and gives the highest
+reward to the worker who satisfied L(w) ~ 0.
+Figure 7. Optimizing loss function on AI Network
+3) Data Parallelism
+One way to achieve data parallelism using AIN protocol could be to use the client as a
+parameter server. Big Storage contains data shards of the input data that will be replicated in
+different locations such that data transfer time is optimized between workers and storage. In
+this scenario, the client asks multiple evaluators with information necessary for training such as
+pre-trained weights, model replica address, and data shard address, and evaluators will return
+the trained result. Then the client updates weights and sends the reconciled weights to the
+evaluators.
+19
+Figure 8. Parallel training on AI Network
+4) Reinforcement training: AlphaGo case
+In AlphaGo case, an evaluator can be a self-play function, where it conducts N rounds of
+self-plays with the policy network and the value network given by workers. The workers will be
+rewarded in the order of the ranking after self-plays. Then, the self-play data can be stored in
+Big Storage and shared with other workers for retraining purposes.
+Figure 9. Reinforcement training on AI Network
+20
+5) Running custom code
+Instead of deploying worker and evaluator codes, a client may want to get the execution result
+of custom code. In this case, evaluators' job is to make sure codes were run correctly by
+workers. Depending on the job's purpose and how evaluators and workers established their
+trust, the verification process may require full control over worker's hardware configurations, or
+verification functions or logs may need to be injected into the code. Establishing secure code
+execution environments is another big research topic, so we leave this up to the job schema's
+owner.
+2.2.5 Security
+1) Resource Protection
+All nodes that run Blockchain are recommended to download docker container and binaries
+from AI Network team's repository. AI Network team will try hard to provide a trustful docker
+repository with various configurations. Currently supported ML configurations, libraries, and
+programming languages are well outlined in https://backend.ai/#/ground.
+Docker restricts access and resource consumption over CPU, GPU, Network, Disk, and
+Memory. Although docker is a good distribution platform, it's not a security platform. It is
+recommended to run docker in isolated VM environment if user's PC contains sensitive
+information.
+2) Binary Signing
+A job schema must include a public code repository URL (GitHub, Bitbucket), and the repository
+should be built using AI Network team's builder with signing (i.e Google Container Builder).
+Through this signing process, we guarantee that the binary is built from our environment and
+that a code pointer is provided. However, it does not fully scan the code to detect
+maliciousness. It's up to the client to decide whether to trust publicly opened code or not. We
+recommend users not to run binaries from unknown sources unless the user has enough insight
+to distinguish whether the provided code is malicious or not.
+3) Connection Security
+All nodes in the blockchain communicate using the blockchain standard API. Docker Containers
+only allow blockchain's broadcasting channel and traffic from Big Storage if the job requires
+additional storage.
+4) Data Security
+Big Storage provides a global file name service to the blockchain nodes and is ACL-controlled
+by only valid nodes. We believe this will facilitate a service capable of competing in both
+performance and security with amazon s3 or google cloud storage.
+However, since workers and evaluators both have access to the data, data preprocessing is
+always required in order to protect any sensitive information from these workers and evaluators.
+21
+For example, instead of providing raw data including sensitive information, shuffling and
+encrypting feature vectors would be safer. Also, we recommend input or neural networks size
+be modified to some meaningless number. For example, if the size of an input vector is 19 x 19,
+it would be very easy to guess you are solving Go problems.
+We cannot prevent nodes from copying and transferring provided data. Therefore, if a client
+wants to evaluate workers with a separate data set from the training data, the test data set
+needs to be revealed at some future point in time. For example, if workers are provided with a
+training data set and evaluators are provided with a test set, the test set must be revealed after
+all the workers return their results. Otherwise, there is a possibility that an evaluator will expose
+the test data set in advance to a worker, and the worker can then try overfitting to the test data.
+5) Compromised Node Scenarios
+In this section, we explain attacking scenarios for each node type. Besides blockchain's security
+features, dashboard helps in detecting any fraud and punishing perpetrators of such fraud
+properly. However, there are certain security risks and loopholes that are out of scope in this
+architecture by design.
+6) Admin
+Admin nodes are the most powerful nodes in any job. Thus pose the greatest risk when
+compromised. Since the AI Network team manages binary releases of jobs in the docker
+repository, we recommend users to run only authenticated binary, especially in the early stages
+of the system.
+An admin may attack the network by reproducing lots of admins beyond what it needs. However
+blockchain and P2P networks are known to be good at handling this type of denial of service
+attack. An attacker will need to pay large fees for making this large number of transactions.
+If an admin is challenged a lot during job execution, people may think this job's processing is
+unstable and may contain malicious nodes. Using this approach, one may try lots of challenges
+to bring down an admin's reputation. However, making challenge requires fees and other nodes
+can always verify whether the challenge was legitimate since communication is open to
+everyone.
+On the other hand, an admin may try to increase its reputation by solving self-generated valid
+jobs. However, it will require a large amount of fees to generate false operation, and the number
+of jobs solved is just one metric to gauge reputation.
+7) Evaluator
+If the evaluation result is not correct and the challenge from the client is successful, the client
+will receive the evaluator's deposit. The client cannot do DDoS attack on evaluators directly
+since there is no direct connection established between them. The evaluator and client are
+communicating using blockchain's broadcasting channel.
+22
+If an evaluator is not very responsive, the response rate of the evaluator in the dashboard will
+be bad, which results in a bad reputation. In addition, an evaluator runs the risk of being
+dropped by its parent if it is not working as expected.
+There might be some cases where a good node is dropped without any reason. In that case, the
+dropped node can work alone instead of working for the parent node by being root of the same
+job. If the old admin is notorious for dropping nodes without any reason, people might prefer the
+newly created node.
+8) Worker
+Incorrect results from workers will not be accepted by evaluators, and it's also possible that the
+worker fails to give any results within the specified time limit. The worker who does not accept
+an evaluation result can initiate a challenge. However, if the workers challenge is not accepted
+after multiple attempts, the reputation of workers may also drop.
+A client may assign very difficult jobs such that no worker can solve these jobs. This might be a
+useful strategy when the client only wants to know whether the size of the problem is solvable or
+not. In this case, the client will send a reward to the evaluator only. If this is not by job design,
+the one who designed the job needs to question its evaluation logic. If there are many nodes
+like this, workers will eventually lose interest in these jobs since they cannot earn proper and
+fair rewards. Good evaluation logic should be able to give proper rewards to workers who have
+honestly executed the provided job. Suppose there is an evaluator which accepts the answer if
+hash(x) = y, and there is a worker who runs x = rand(). If probability of hash(x) = y is very low
+compared to the reward, worker will not try to run this job anymore. In contrast, suppose f(x) = y
+and x = g(y), where f(x) = y is the evaluation function, and x = g(y) is the problem to be solved
+by the worker. If g is deterministic and can be easily run within polynomial time, it is attractive to
+workers since its reward is predictable.
+3 Sample User Experience
+Calculate Root
+Given y, find x that satisfies x * x = y.
+Suppose the worker is not smart enough so that it can only guess the answer using rand(). The
+client wants to give all the reward to the one who returned the closest answer. The simplest
+execution using console will look like the following:
+23
+$ connect AIN
+AIN> registerJob job_schema.proto worker.py evaluator.py
+Registration complete. Job ID is 0xabcde.
+.. wait for propagation ..
+AIN> stats 0xabcde
+3 evaluators, 100 workers running.
+AIN> requestJob {job_id: 0xabcde, job_input: {y: 4}, reward: [10, 10], time_limit: 3000}
+X: 2
+Total 12 workers participated. Evaluator (0xfghij) received 10, worker (0xklmn) received 10.
+Sample job_schema.proto
+// The greeting service definition.
+service Worker {
+// Sends a greeting
+rpc CalculateRoot (Request) returns (WorkerReply) {}
+}
+service Evaluator {
+// Sends a greeting
+rpc EvaluateRoot (Request, Workers) returns (EvaluationResult) {}
+}
+message Request {
+float y = 1;
+}
+message WorkerReply {
+float x = 1;
+}
+message Worker {
+string node = 1;
+WorkerReply response = 3;
+}
+message Workers {
+repeated Worker workers = 1;
+}
+message EvaluationResult {
+repeated node = 1; // returns highest ranked worker first. drops invalid worker.
+}
+Sample worker.py
+24
+class Worker(helloworld_pb2_grpc.WorkerServicer):
+def CalculateRoot(self, request, context):
+y = request.y
+min_loss = y
+for i in range(100):
+x = random.random() * request.y
+loss = abs(y - x * x)
+if min_loss > loss:
+min_loss = loss
+best_x = x
+return best_x
+Sample evaluator.py
+class Evaluator(helloworld_pb2_grpc.EvaluatorServicer):
+def EvaluateRoot(self, request, context):
+// sorting function omitted. Sorted by the closest answer.
+nodes = [worker.node for worker in sorted(workers)]:
+return nodes
+25
+// The greeting service definition.
+service Worker {
+// Sends a greeting
+rpc CalculateRoot (Request) returns (WorkerReply) {}
+}
+service Evaluator {
+// Sends a greeting
+rpc EvaluateRoot (Request, Workers) returns (EvaluationResult) {}
+}
+message Request {
+float y = 1;
+}
+message WorkerReply {
+float x = 1;
+}
+message Worker {
+string node = 1;
+WorkerReply response = 3;
+}
+message Workers {
+repeated Worker workers = 1;
+}
+message EvaluationResult {
+repeated node = 1; // returns highest ranked worker first. drops invalid worker.
+}
+Sample worker.py
+26
+class Worker(helloworld_pb2_grpc.WorkerServicer):
+def CalculateRoot(self, request, context):
+y = request.y
+min_loss = y
+for i in range(100):
+x = random.random() * request.y
+loss = abs(y - x * x)
+if min_loss > loss:
+min_loss = loss
+best_x = x
+return best_x
+Sample evaluator.py
+class Evaluator(helloworld_pb2_grpc.EvaluatorServicer):
+def EvaluateRoot(self, request, context):
+// sorting function omitted. Sorted by the closest answer.
+nodes = [worker.node for worker in sorted(workers)]:
+return nodes
+27
+Q. What is AI Network and AIN?
+A.  AI Network is a type of cloud service platform built on the foundation of blockchain technology. Through this novel infrastructure, microservices developed by individual developers can be instantly integrated into the network of computers. In lieu of a single company owning all applications used by the general public on a daily basis, developers all around the world contribute to small parts of the application. To achieve this goal, blockchain is built from the ground up to prioritize scalability, concurrency, and efficiency in computational throughput. The AI Network currency is achieved through the “AI Network Blockchain’, and our ecosystem’s unit of currency is called “AIN”. AIN needs to be reserved when accessing deployed services on the blockchain.
+
+Q. How would you differentiate AIN with other AI/ML related blockchain projects?
+A.  Unlike other blockchain projects that mainly focus on solving problems on distributed computing, AIN is both solving distributed computing via blockchain and developing solution market platform for ML. Our goal is to lower the bar for those who are willing to use ML solutions without in-depth knowledge. At the end of the day, AIN will open a window of opportunity for researchers and companies that require data for ML but lack expertise that will eventually lead to the dramatic growth of the ML solution market itself.
+
+Q. Why would you recommend to use decentralized computing machines via AIN compared to using Google or Amazon cloud platforms for ML jobs?
+A.  Using decentralized computing power(P2P) is not the only option for participants using AI Network. Cloud platforms, such as Google and AWS, will also be part of AIN’s backend computing resources along with P2P. Users of AIN, AI researchers and companies will be able to choose between the options depending on their context. If a user needs to train an AI model asap, AIN will assign requested job to centralized cloud platform to meet their needs: speed. On the other hand, if a user wants their ML job to be done cost efficiently, but has relatively more time, AIN will mainly assign it to P2P computing resources to meet his/her goal. Either way, AIN will be the answer to both users.
+
+Q. AIN isn’t blockchain as a platform like Ethereum or EOS, but more specialized in specific area, AI and ML. Do you think AI industry is sizable enough and expected to grow fast? 
+A.  Google and most other tech companies see  AI as the next engine for every product and service, not as one specific area. According to a recent report on AI, the market size is approximately 2.7 billion USD in 2017 but expected to reach 9.9 billion USD market by 2022. The figure includes AI tools/service, AI cloud/on-premises environment, and AI applications market size and AIN covers every domain mentioned above. (Source: marketsandmarkets.com, Artificial Intelligence Platform Market) 
+
+Q. What is the role of the admin and its relation to other roles(e.g. worker, evaluator) in AIN blockchain protocol?
+A.  Admin is a node that receives an ML job request from client and initiate the job by defining job schema to recruit workers and evaluators of the job. If a node wants to register and receive a job order as an admin, it normally provides its record(e.g. Github link) to clients in order to win their trust (but self-registering as an admin in AIN is open to everyone). Whereas evaluators and workers are allowed to  join the job by obtaining approval from the admin, and also be punished by admin if they’re considered as malicious workers or evaluators. The client, who has requested the job, can challenge the job results to the admin if he isn’t satisfied with it. To find out the token economics behind this process, refer to the architecture paper.
+
+Q. Would you propose an example of job execution scenario on AIN?
+A.  The AI Network blockchain, composed of permissionless nodes, records rules for service communication, and programs are then executed off the blockchain by resource providers who monitor the blockchain, following the communication rules agreed on the blockchain.
+AIN is charged when executing the program, and the executor can be application users, developers, or even another program. The mechanism of the program execution is described by job specifications. The executor of the program, who uses the service also has an option of preemptive buying. With this option, the executor will be able to reserve usage of services from a specific resource provider at a fixed AIN price for a fixed period, as well as to eliminate the risk of AIN price fluctuation during execution. 
+Unlike synchronous executions of smart contracts, the AI network prioritises real-time execution over preserving execution order. This post-consensus protocol enables high transaction throughput, low latency, and high concurrency in processing transactions. AI Network’s execution can be asynchronous, and the arrival of results may be different from initiation order. Later results may get interrupted and dropped. As such, the blockchain plays a vital role in maintaining a consensus and keeping the consistent state among lists of conflicting executions.
+
+Q. I don’t see clear rationale to run ML on Blockchain. Can you explain why?
+A.  Simply said, users need dropbox but also need P2P file sharing services such as torrent. Coming back to our case, P2P computing solution is not the alternative of existing centralized computing. While few big companies create private cloud environment to run ML or utilize Google or Amazon’s cloud ML services, the majority of others, including small researchers, and companies get left behind in the era of AI due to limited budget and human resources. By using AIN, companies and researchers can decouple the costs of developing ML solution onto the cloud, and costs of running an ML model, which will allow them to cut huge costs.
+There is an open project known as Leela Zero (http://zero.sjeng.org/) that replicates AlphaGo Zero in an open environment. Due to development teams’ computing power and budget constraint, people who are willing to support Leela Zero project can provide their computing power P2P. AIN’s blockchain technology makes computing power donations much easier.
+
+Q. Are smart contracts used?
+A. We do implement smart contracts, but not heavily. Thus, AIN runs extremely quickly and cost-efficiently compared to other smart contract based blockchains that use virtual machines and small sized memory in the blocks. Since massive computing power is required to run ML jobs, we believe current AIN protocol architecture with minimal smart contract usage is more suitable for ML.
+
+Q. At the early stage of AIN with a limited number of participants performing the job, how would you prevent malicious collusion between the admin and other players for the client?
+A.  Workers’ jobs are always being audited by evaluators. However, if all three of them (admin, worker, and evaluator) agree to create a collusion and return the wrong result, the client has a means to protect himself by “blind challenge” that allows other admins to evaluate the job result by giving proper rewards. For more details on how this works, please refer to the architecture paper.
+
+Q. I have concerns about data protection for ML jobs. It seems to be exposed to nodes performing requested job(aka. worker). Any thoughts?
+A.  AIN does not enforce admins, or nodes, that will organize job schema as per clients’ request, to adopt a certain type of security technology, but provides several methods to protect data and models. A few examples are as follows:
+Data obfuscation: scramble data to prevent unauthorized access to sensitive materials.
+Selecting different types of data storage: Users can use centralized storages such as Google Cloud Storage and Amazon S3, or decentralized cloud storage such as IPFS.
+ACL Control: allow access only to authorized nodes for a certain time period.
+Fragmentation: models and data can be fragmented and trained separately so that solution providers can only access only a small portion of the solution.
+
+Q. When nodes spend their computing power mostly on AI problem solving, mining difficulty can drop and may give signals for 51% attacks on AIN network to hostile nodes. What are your thoughts on this?
+A.  Changes on mining difficulty are expected and also intended by dev team. Decreased difficulty would result in higher AIN mining profit, more incentives for miners/nodes to join our network, and eventually more nodes allow researchers/companies to run AI jobs with cheaper price than existing cloud platforms, which is one of our objectives to build this network and ecosystem. 
+Theoretically, 51% attacks can happen in any network but it’s a matter of the cost and its return. In the early days of Bitcoin, difficulty of mining was much lower than the present, but we haven’t observed frequent alert messages of 51% attack. One of the method to prevent 51% attack is not only increasing mining difficulty, but also increasing the number of confirmation. Considering current mining difficulty and entire hash power in our network, we can always find the way to prevent 51% attack based on practices mentioned above.
+
+Q. What’s your plan to invite computing power suppliers such as miners to AIN?
+A.  It’s crucial for us to have miners and other big computing power suppliers join AIN for network stabilization. We’re currently contacting a few representative mining pools in China and Korea and we expect to have concrete results soon.
+
+Q. Have you run any POC(proof of concept) for AIN protocol?
+A.  Our development team is currently running simulations to check if there are any structural issue with our model. One of the focal points is detecting, preventing, and if needed, punishing malicious nodes. Understanding the expected ratio of returning wrong or zero value by the workers, as well as job approval by evaluators is absolutely essential.
+
+Q. How long will it take to finish AIN blockchain development?
+A.  AIN blockchain only includes communication records (can be regarded as ledger). Thus, we won’t need smart contracts in our block and will be relatively easily develop. However, establishing an AI solution market and connecting each component of AIN(SRE, big storage, and blockchain etc.) will take more time and effort than developing blockchain itself.
+
+AI Network Glossary
+
+Peer-to-peer (P2P)
+A peer-to-peer network is a group of participants (nodes) that communicate and share resources with each other directly. A P2P network differs from the client-server model of network in that it doesn’t require central coordination. The nodes follow certain rules of communication to both supply and consume resources within the network. 
+Blockchain protocol
+A protocol is simply a set of rules that two or more participants follow to communicate among them. A blockchain is a public ledger (record of transactions) that nodes (participants) of a peer-to-peer network monitor and document together. In order to do so, a P2P network needs a blockchain protocol that defines agreed upon procedures, which may include selecting block producers, how and how often a block is produced, and so forth.
+Deep Computer
+Deep Computer is a partially-decentralized computer that utilizes global computing power to solve various Machine Learning problems that would be challenging or even impossible to run as an individual. It is composed of three main components: Secure Runtime Environment, Big Storage and AI Network. Unlike the completely decentralized “world computer” that Ethereum claims to be, Deep Computer uses a blockchain only to establish trust within the network, and lets other systems and services take care of carrying out heavy Machine Learning computations and storing relevant data.
+Heterogeneous vs. Homogeneous
+“Homogeneous” hash computations that many blockchain nodes perform require a processor that’s tailored to a job such as bitcoin mining. In contrast, training ML models benefit greatly from utilizing multiple computing elements, namely CPU, GPU, TPU, FPGA, and so on. This type of computing systems involving multiple processors with different architectures is called heterogeneous computing.
+SHA-2
+SHA-2 is a family of cryptographic hash functions developed by the United States National Security Agency (NSA) and National Institute of Standards and Technology (NIST) [1]. A cryptographic hash function takes in arbitrary length of input data and returns a fixed size (224, 256, 384 or 512 bits, depending on the algorithm) hash value. It is designed to produce unique and uncorrelated hash values in such a way that even a slightest change in the input data results in a drastically different hash value. In fact, SHA-256, one of the SHA-2 algorithms, is used for verifying transactions in several blockchain protocols including Bitcoin.
+[1] Wouter Penard and Tim van Werkhoven. On the Secure Hash Algorithm family. Accessed July 1, 2018.
+NP
+In computational complexity theory, problems are often reduced to decision problems where the answer is either “yes” or “no, ” and these decision problems can be classified as P, NP, NP-complete and NP-hard. A problem is in NP if it’s not efficiently solvable-which means it cannot be solved in polynomial time in terms of its input size. However, if someone gives you an answer to the problem, you have a proof that can efficiently determine whether the answer is correct or not. Similarly, ML problems are not efficiently solvable (cannot be solved in polynomial time), but once you have an answer, it is relatively easy to verify the solution (can be proved in polynomial time). [2]
+ [2] https://en.wikipedia.org/wiki/NP_(complexity)
+RPC ledger
+RPC, short for Remote Procedure Call, is how a process on a machine executes code on another “remote” machine and receives the results back, whereas a  regular “local” procedure call is made between a pair of processes within a machine. A blockchain is a RPC ledger as it is publicly accessible through RPCs.
+Sandbox
+Sandboxing is executing code in a separate and controlled environment to prevent untrusted code from affecting and possibly harming the hosting machine. In Deep Computing system, it is imperative that nodes can execute unverified code without risking their security, and sandboxing will provide the necessary protection.
+Swarm
+Swarm is a distributed storage platform and content distribution service being developed for Ethereum. It is envisioned to be a P2P solution that stores code and data related to DApps, blockchain, and the system’s state. Swarm nodes are expected to be sufficiently incentivized to provide the storage and serving the community demands [3]. 
+[3] https://swarm-guide.readthedocs.io/en/latest/introduction.html
+Whisper
+Whisper is a P2P communication protocol for Ethereum DApps. Unlike other traditional protocols like TCP/IP or HTTP, Whisper is designed to let users make trade-offs between bandwidth/latency and privacy. Ethereum Wiki claims that Whisper is capable of sending and receiving “dark messages” without any leakage of information if the user is willing to sacrifice the bandwidth and latency to a significant degree [4, 5].
+[4] https://github.com/ethereum/wiki/wiki/Whisper
+ [5] https://github.com/ethereum/wiki/wiki/Whisper-PoC-2-Protocol-Spec
+Big storage
+Big storage is one of the three main components of Deep Computer. It aggregates centralized and decentralized data storage services that different service providers offer, and each AIN node can pay to reserve spaces needed for sharing job related data (i.e. input and output of a ML problem). [+ key differences b/w swarm and big storage]
+Secure Runtime Environment (SRE)
+Secure Runtime Environment is a language-agnostic sandboxed programming environment that will be provided by multiple hosting nodes. In a SRE, a Binary Manager oversees the authentication, deployment, updates, and notifying of binaries. From a SRE, evaluators and workers will be able to download Job Schema binaries that admins uploaded.
+TensorFlow
+TensorFlow is a software library for high performance numerical computation [6]. Originally developed by Google, it is now an open source project that numerous big and small companies use for their ML and AI application developments.
+[6] https://www.tensorflow.org/
+AI Network White Paper
+Open Source to Open Resource
+Last updated on July 24th, 2019
+Contents
+Introduction 1
+Problem Statement 2
+Open Resource Initiative 2
+Introducing AI Network 5
+The AI Network Blockchain 6
+AI Network Currency 7
+AI Network Governance 9
+AI Network Roadmap 10
+How to contribute to AI Network 10
+Conclusion 11
+Importance Notice 12
+Introduction
+AI Network is a global backend infrastructure that transforms millions of open source
+projects into live services (a.k.a. Open Resource).
+This document outlines our plans for a real-time, event-driven blockchain platform that
+aims to initiate innovation in the decentralized application economy, particularly for AI
+programs.
+1
+Problem Statement
+The advent of the Open Source movement provided an opportunity for anyone to freely
+access, distribute, and modify the software. Since the GNU Project by Richard Stallman
+in 1983, it has become possible to run computers using only free, Open Source
+software. Today, even giant technology companies have begun open sourcing their
+code to enable developers to contribute to their services.
+Despite this progress, a growing number of Open Source projects are not instantly
+executable in a regular developer’s environment. This is because the source code is
+developed on different types of computers in different runtime environment (i.e., IoT),
+and programs require vast amounts of resources or specialized hardware such as
+GPUs or TPUs (i.e., Machine Learning). Back in 1983, Stallman envisaged that anyone
+should be able to augment programs that were initially written by other developers. If a
+small number of developers can run a program, this will prevent other developers from
+offering contributions to the Open Source project and impede progress of the project.
+Open Resource Initiative
+We propose "Open Resource" as the next evolutionary milestone of Stallman's initial
+Open Source initiative. Open Resource starts by decoupling the role of developers from
+the role of resource providers. Developers should be able to upload their programs on
+the open network freely, and resource providers should only be concerned with
+operating the program and sharing the revenue in return. By decoupling these two
+responsibilities, liability and cost of resource management will no longer belong to
+developers. The AI Network blockchain will serve as a bridge between the program and
+the resource, offering a stable way to utilize Open Source solutions.
+2
+Fig 1. Decoupling the role of resource providers from the role of developers can boost the number of
+programs published as developers no longer have to worry about maintaining application runtime
+environments.
+Through this shift towards Open Resource, we expect composability and interoperability
+of solutions to be significantly improved. Developers currently make use of third-party
+solutions through the API economy, which exposes organizations’ digital assets via
+application programming interfaces (APIs). However, there are two salient problems
+with the current API economy :
+● There currently exists no sound payment system for computers to pay with for
+the globalized micro API executions.
+● Ownership belongs to API providers, allowing these providers to change
+charging policies or service structures at any time.
+3
+Fig 2. AS-IS: Each company is building its own AI solutions from scratch. Although lots of solutions are
+utilizing open source code, they are contained in the company's stack and cannot be shared externally.
+Fig 3. TO-BE: Components are shared as a service on the blockchain, and do not need to be separately
+deployed every time.
+Blockchains and cryptocurrencies have a few unique properties that can potentially
+address some of the problems of API ownership. Blockchains ensure that no single
+participant controls the solution and allow anybody to utilize services on a blockchain
+through a protected access channel.
+However, the performance of existing blockchain systems is not powerful enough to
+serve mainstream cloud services. Mass-market usage of existing blockchains are
+mainly focusing on financial use cases. To date, even the most elegant solution
+available is not scalable enough for general purpose computing. We believe that a
+highly concurrent system built upon trusted frameworks can deliver a lower-cost, more
+accessible, and more connected global cloud network.
+Followings are our beliefs and motivations for Open Resource initiative.
+● We believe that creative implementations of novel ideas should be publishable by
+developers, without consideration for computational resource restrictions.
+● We believe that global, open, instant, low-cost, ownerless service will create
+immense opportunity for hosting programs globally.
+● We believe that a global backend infrastructure should be designed and
+governed, just as public utilities.
+4
+● We believe that we all have a responsibility to help support ethical engineers and
+continuously uphold the integrity of the AI ecosystem. Integrity is especially
+crucial for immutable programs, which can only be killed by a consensus across
+all nodes.
+Introducing AI Network
+AI Network is a new kind of cloud service platform built on the foundation of blockchain
+technology. Through this novel infrastructure, microservices developed by individual
+developers can be instantly integrated into the network of computers. AI Network has
+three characteristics to create a more intuitive backend system:
+1. It is built on a concurrent, scalable, and reliable blockchain.
+2. It is designed to serve applications, with quality guaranteed through a
+decentralized contract between developers and resource providers.
+3. It is governed by the independent developer community, which aims to contribute
+to the evolution of the Open Source community.
+Imagine an open, interoperable ecosystem of cloud services, built by developers and
+organizations to help operate global applications which people use on a daily basis. No
+single company owns these applications. Instead, developers all over the world
+contribute small parts of applications, thus making constant small improvements to the
+global applications that people around the world use everyday. In order to achieve this
+long-term vision, the blockchain is built from the ground up to prioritize scalability,
+concurrency, and efficiency in computational throughput.
+The AI Network currency is achieved through the “AI Network Blockchain.” Our
+ecosystem's unit of currency is called “AIN.” AIN needs to be reserved when accessing
+deployed services on blockchain. To have confidence that its value will remain relatively
+stable over time, solution providers and resource providers agree on contracts, and a
+certain amount of AIN is deposited in order to guarantee this contract. Through these
+contracts, a significant portion of AIN will be deposited on blockchain building trust in its
+intrinsic value.
+While the AI Network teams play a crucial role in the initial stage of the AI Network
+Blockchain protocol, the community of developers and resource providers hold the final
+5
+decision-making authority. AI Network Blockchain is an open source project, which
+allows millions of open source projects to maintain their services online.
+AI Network blockchain is a permissionless blockchain, which means any computer in
+the world is free to participate as a validator node or a resource provider. Validators are
+responsible for verifying communication between developers and resource providers.
+Developers who initiate services are capable of configuring permission settings. This
+means only entities which meet specific requirements can be resource nodes for a
+certain deployed program. In summary, the AI Network blockchain composed of
+permissionless nodes records rules for service communication, and programs are then
+executed off the blockchain by resource providers who monitor the blockchain, following
+the communication rules agreed on the blockchain.
+The AI Network Blockchain
+The AI Network Blockchain is designed to provide secure access to computers
+connected to the network. This secure network will form a serverless computing
+architecture by utilizing accessible computers in the network. This section will highlight
+three requirements regarding the AI Network Blockchain:
+1. Capable of processing any general programming language.
+2. Capable of hosting heterogeneous types of clouds ranging from mobile phones
+to supercomputers.
+3. Real-time responses to transactions via asynchronous execution.
+The goal of AI Network is to serve millions of open source projects. As such, the AI
+Network is designed for operating different types of software on the most suitable
+runtime environment. If the project is about deep learning, it might need high
+performance GPU, or if the project is about sensor network, it might need millions of
+small computers. Ethereum supports only one type of language called Solidity and its
+runtime environment is called EVM. AI Network runs a variety of languages on
+heterogeneous types of runtime environments. We refer to these environments as
+Secure Runtime Environment, or SRE for short. AI Network does not have a native
+smart contract language such as Solidity. Insead, workers in resource provider pools
+are listening to blockchain events to participate in the execution. Thus, blockchain’s
+responsibility is narrowed down to propagating real-time events, and recording life cycle
+of executions.
+6
+Unlike synchronous execution of the smart contract, the AI network prioritises real-time
+execution over preserving execution order. This post-consensus protocol enables high
+transaction throughput, low latency, and high concurrency in processing transactions. AI
+Network’s execution can be asynchronous, and the arrival of results may be different
+from initiation order. Later results may get interrupted and dropped. As such, the
+blockchain plays a vital role in maintaining a consensus and keeping the consistent
+state among lists of conflicting executions.
+AI Network Blockchain maintains a single tree data structure in a key-value storage that
+records the states from the complete history of transactions. This implementation
+simplifies the work of applications accessing the blockchain, allowing them to read the
+specific part of the data in a unified schema.
+The blockchain wallet normally gives access to a user’s money, managing keys and
+addresses, creating and signing transactions. In the world of financial blockchains,
+users are humans, and addresses are for managing assets of humans. The AI Network
+wallet is for computers, and one computer unit holds one payable address. In addition to
+payment system, this address serves as an access key for computing resources of the
+node. For example, it is possible to open a shell connection to the node on the
+blockchain using the wallet as a secure connection scheme.
+AI Network Currency
+The AI Network currency is a digital currency designed both for humans and computers.
+It is designed to make computational costs more measurable. Using the blockchain
+protocol, AIN maintains stability during the execution of services by reserving
+computational power for a specific duration of time. This means that anyone with AIN
+coins has a high degree of certainty that they can use their digital currency for
+accessing valuable backend services.
+This also means that one AIN will not always guarantee some fixed amount of GPUs or
+CPUs. Instead, the value of one AIN may fluctuate along with the value of the total
+computing power and solutions in the network. However, since contracts always hold a
+significant amount of total AIN at any time, volatility of the currency should be minimal.
+Therefore AIN holders can trust the currency’s ability to preserve value for processing
+agreed numbers of requests offered by the resource provider.
+7
+Fundamentally, an AIN token is a utility token that is used to purchase certain services
+available on the blockchain. In order to provide a stable service, the developer of the
+service initiates the contract with resource providers. Resource providers may then
+make a deposit, guaranteeing resource usage for the specific amount of time. After the
+contract, the resource provider can share the revenue of the service. This contract
+enables applications to have a stable backend, and decouples service quality from AIN
+price fluctuation. Eventually, depositing in contracts will play a pivotal role in currency
+stabilization, allowing AIN to maintain consistent intrinsic value.
+Fig 4. Staking pool ensures quality and accountability for contract stakeholders.
+AIN is charged when executing the program, and the executor can be application users,
+developers, or another program. The mechanism of the program execution is described
+by a job specification. The executor of the program who uses the service also has an
+option of preemptive buying. With this option, the executor will be able to reserve usage
+8
+of services from a specific resource provider at a fixed AIN price for a fixed period, as
+well as to eliminate the risk of AIN price fluctuation during execution.
+In summary, AIN tokens can be used to secure stable resources. Service qualities such
+as real-timeness and queries per second (QPS) are guaranteed through executors’ and
+resource providers’ deposits. Paying for requests in batches reduces unnecessary
+microtransactions and prevents price fluctuation.
+AI Network Governance
+AI Network Governance is designed for AI Network Blockchain to be a global
+application backend that empowers millions of Open Source project. The governing
+entity is the AI Network Pte Ltd, headquartered in Singapore. The organization is built to
+facilitate the operation, promotion, and development of the AI Network Blockchain
+through a consensus among the network’s validator nodes, developers, and resource
+providers.
+The organization will aid in keeping AI Network’s participants in alignment with the
+network’s technical roadmap and development goals. One of the main responsibilities of
+AI Network is to establish sustainable operation of AI Network open source projects as
+a non-profit entities. AI Network open source projects grow with the collaboration of
+decentralized communities based on contribution guidelines and protocols.
+Once we have enough usage volume in the network, the organization will put effort in
+developing an algorithm for measuring the network value of AI Network. The developer
+committee will accept one of the proposed solutions, and the agreed algorithm will be
+constantly upgraded. Coins are only minted when the algorithm agrees that total
+computing power in the AI Network has grown enough to warrant the minting of
+additional coins. The algorithm may also decide to burn AIN if total computing power
+utilized throughout AI Network services has degraded significantly. The official ERC-20
+token contract for AIN token can be found at https://ainetwork.ai. Once the AI Network
+blockchain is launched, AIN ERC-20 will be swapped 1:1 with the main-net AIN. The
+initial total supply of AIN is 700,000,000 AIN. 60% of AIN are supposed to be released
+into the public market, and new tokens will not be minted unless this initial 60% are
+entirely liquidated. The remaining 40% will be reserved for developers of the AI Network
+9
+Blockchain, and incentives for early participants such as AI solution providers,
+computing resource providers, and validators.
+AI Network Roadmap
+A testnet of the AI Network blockchain will be launched in the second half of 2019, and
+the AI Network main-net will be launched in 2020.
+In the following months, AI Network will work with its community to gather feedback on
+the AI Network Blockchain prototype, and develop it further to a production-ready state.
+In particular, this work will focus on ensuring the reliability, performance, and scalability
+of the protocol and implementation.
+● The AI Network will publish a detailed technical paper which describes the
+blockchain for real-time cloud computing, in addition to the architecture paper
+published in June 2018.
+● The AI Network will prepare tutorials and API documents for developers to
+build real-time dApps using well-defined blockchain protocols.
+● The AI Network will create a framework for the collaborative development of
+the technology behind the AI Network Blockchain, using the open source
+community.
+● The AI Network will continuously monitor the performance of blockchain using
+various tests such as integration tests, stress tests, and latency tests in
+collaboration with entities such as AI researchers and cloud service providers.
+● The AI Network will work to foster the development of runtime environments to
+support popular programming languages and machine learning frameworks. AI
+Network will also provide an in-depth guide for developers to deploy
+customized runtime environments and programs on the blockchain.
+How to contribute to AI Network
+The AI Network envisions a diverse network of runtime environments for developers
+building applications and services globally. Together, we want to enable any developer
+or an IT company to have affordable and instant access to collaborative application
+10
+backend. For example, as soon as a developer working individually publishes the code
+to an Open Source repository, their code is instantly integrated into live services on the
+AI Network.
+This is merely the beginning of our grand journey, and we ask the members of our
+community to help, and contribute to our vision. If you believe in what AI Network could
+do for millions of open source project around the world, share your perspective and join
+in.
+● If you are a researcher or protocol developer, an early preview of the AI
+Network testnet will be available in the second half of 2019. Once we publish
+the code, community members can provide feedback instantly. We are
+committed to undergoing a community-oriented development process,
+motivating developers to engage in our platform.
+● If your organization is interested in becoming an early resource provider, sign
+up for an invitation here.
+● If you are interested in converting Open Source project into Open Resource
+project as early as possible, sign up for an invitation here.
+Conclusion
+Reliable decentralized backend infrastructure can genuinely deliver the promise of a
+“World Computer.”
+AI Network is a collaborated backend for open source projects built on top of a scalable
+and stable blockchain, powered by diverse resource providers around the world, and
+governed by a global developer community. Together, we hope to rediscover the
+collaborative power of open source, and solve some of the world's most difficult
+problems.
+11
+Importance Notice
+Please read this section carefully. If you are in any doubt as to the action you should
+take, you should consult your legal, financial, tax or other professional advisor(s).
+Please note that the AIN coins are not intended to constitute securities in Singapore or
+any other jurisdiction. Further, this White Paper does not constitute a prospectus or
+offer document of any sort, and is not intended to constitute an offer of securities or an
+invitation or solicitation for investment in securities in Singapore or any other
+jurisdiction.
+This White Paper does not and shall not be read to constitute any opinion or advice to
+purchase, sell or otherwise invest in any AIN coins, and shall not be relied upon in
+connection with any decision to purchase, sell or otherwise invest in any AIN coins.
+This White Paper or any information set out therein has not been examined or
+approved by any regulatory authority in Singapore or elsewhere, and the publication,
+distribution and dissemination of this White Paper does not imply that the applicable
+laws, regulatory requirements or rules, whether in Singapore or elsewhere, have been
+complied with.
+Disclaimer of Liability
+To the extent permitted by the applicable laws, AI Network Pte Ltd (the “Company”)
+shall not be liable for any indirect, special, incidental, consequential, or exemplary
+damages of any kind (including, but not limited to, where related to loss of revenue,
+income or profits, loss of use or data, or damages for business interruption) arising out
+of or in any way related to any acceptance of or reliance on this White Paper or any
+part thereof by you, and/or the purchase, sale or use of any AIN Coins by you,
+regardless of the form of action, whether based in contract, tort (including, but not
+limited to, simple negligence, whether active, passive or imputed), or any other legal
+or equitable theory.
+12
+No Representations and Warranties
+The Company does not make, and hereby disclaims, any representation or warranty
+to any entity or person, including any representation or warranty in respect of the truth,
+accuracy and completeness of any information set out in this White Paper.
+Forward-Looking Statements
+For the avoidance of doubt, all statements contained in this White Paper that are not
+statements of historical fact constitute “forward-looking statements”. These
+forward-looking statements reflect the Company’s current views with respect to future
+events including but not limited to the Company’s proposed operations, financial
+performance, business strategy and future plans. Some of these statements may be
+identified by forward-looking terms such as “develop”, “developing”, “would”, “will” or
+other similar terms. However, these terms are not the exclusive means of identifying
+forward-looking statements. These forward-looking statements are not guarantees of
+future performance, and are based upon a number of assumptions and estimates
+which are subject to significant uncertainties that involve risks, many of which are
+beyond the Company’s control. If such risks or uncertainties materialise or such
+assumptions prove incorrect, plans discussed in this White Paper may not happen as
+you expect or may not happen at all. Accordingly, do not place undue reliance on any
+forward-looking statements in this White Paper, and the Company shall not be
+responsible in any way whatsoever on any loss or damage caused by your reliance on
+any forward-looking statements in this White Paper. While the Company may update
+forward-looking statements from time to time to reflect any change in its expectation
+with regard to such forward-looking statement or to reflect any change in events,
+conditions, or circumstances on which any such statement is based, the Company
+expressly disclaims any obligation or undertaking to do so.
+No Advice
+This White Paper or any part thereof shall not be construed to be business, legal,
+financial or tax advice regarding the Company or the AIN coins. You should consult
+your own legal, financial, tax or other professional adviser regarding the Company or
+the AIN coins. You should be aware that you may be required to bear the risks,
+financial or otherwise, of any purchase, sale, receipt, ownership or use of the AIN
+coins.
+13
+Taxes
+You acknowledge, understand and agree that the purchase, sale, receipt, ownership
+or use of any AIN coins (which expression shall include tokens and any other similar
+expressions) may have tax consequences for you in Singapore and/or in any other
+relevant jurisdiction.
+If you decide to purchase, sell or use any AIN coins, you shall be responsible for
+determining any and all taxes that are applicable to your purchase, sale, receipt,
+ownership or use of the AIN coins in the relevant jurisdiction(s) and declaring,
+reporting and remitting the correct amount of taxes to the relevant tax authorities, or
+otherwise complying with any other tax obligations in the relevant jurisdiction(s). You
+shall be solely liable for all claims, fines, penalties, punishments or any other forms of
+liabilities arising from the non-fulfilment or non-performance of any of your obligations
+in relation to any taxes payable to any tax authorities.
+The Company shall not be responsible for determining any taxes payable to any tax
+authorities, and/or declaring, reporting and remitting the correct amount of taxes to the
+relevant tax authorities, and the Company bears no liability or responsibility
+whatsoever with respect to any tax obligations on or tax consequences to you in
+relation to your purchase, sale, receipt, ownership or use of any AIN coins.
+14
+-
+
+Blockchain for Serverless Computing
+Background
+AI Network was highly motivated by the idea behind Ethereum’s Turing completeness and world computer. A network in which every node verifies code execution can provide unprecedented security and immutability in the permissionless network. As of now, the consensus mechanism’s speed is limited to 15 transactions per second (TPS). When Ethereum 2.0 is launched, transaction speed is projected to increase to around 3K ~ 15K TPS. This would enable the network to handle a decent amount of global financial transactions. Despite the considerable improvement, this number still remains wholly inadequate in terms of being capable of handling operations for all projected global applications. By design, scalability of Ethereum is limited by its own strength which can be summarized as statefulness, trustlessness, and serialized operation.
+When designing modern serverless architecture, applications achieve high scalability through statelessness, permission, and concurrent operations. By decoupling computation from blockchain, AI Network can perform large scale operations in a serverless architecture. At the same time, AI Network blockchain is designed as a lightweight ledger that can process millions of transactions per second and safely record communication between clients and workers. The detailed differences between AI Network, blockchains, and serverless architectures are described in the following diagram.
+
+
+
+Blockchain
+Serverless
+AI Network
+Operation
+Stateful
+Stateless
+Balance/Rules/Trigger State: Stateful
+Value State: Stateless
+Access
+Permissionless
+Permissioned
+Blockchain Validator: Permissionless
+Trigger: Permissioned/Permissionless (configurable)
+Storage
+Persistent
+Ephemeral
+Persistent
+Network
+Distributed
+Decentralized
+Distributed
+Scalability
+Low
+High
+High
+Latency
+High
+Low
+Low
+Data Capacity
+Low
+High
+High
+Concurrency
+Serialized
+Concurrent
+Concurrent
+Language
+Monoglot
+Polyglot
+Polyglot
+Table . Comparison between blockchain, serverless, and AI Network. AI Network uses blockchain as a lightweight communication channel and adapts serverless architecture for computation.
+Blockchain as Function as a Service (FaaS)
+
+Fig. EVM runs contracts and contracts need not to be managed by developers once they are deployed. In this respect, Ethereum can be viewed as a very slow and expensive Function as a Service. Unlike monoglot Ethereum, AI Network runs a variety of languages on heterogeneous types of runtime environments. We refer to these environments as Secure Runtime Environment, or SRE for short.
+
+Function as a service (FaaS) is a platform allowing customers to develop, run, and manage application functionalities without the complexity of building and maintaining the infrastructure. Although FaaS is often used as a category of cloud service, it is interesting to notice that Ethereum can also provide similar characteristics. Especially, Web IDEs for solidity such as remix (https://remix.ethereum.org) enable developers to develop Solidity contracts straight from the browser, and then deploy to Ethereum network. Once it is deployed, EVM in Ethereum nodes run the functions, and developers don’t have to worry about maintaining the infrastructure. Furthermore, unlike cloud functions that can be stopped and modified as developers require, deployed functions are managed forever, unless the function has exposed the self-destruction method.
+Despite the similarities, Ethereum is far from a general purpose FaaS because (1) It only supports Solidity. (2) Operations are expensive. (3) It can only interact with Ethereum’s internal state, and cannot call other components such as external databases and APIs. 
+AI Network deploys functions to the blockchain just like Ethereum, but it can also (1) support all available languages and framework, (2) cost less than major cloud services, and (3) can interact with off-chain components if necessary.
+
+
+
+
+Fig. Ethereum supports only one language (Solidity) and one virtual machine (EVM), and all nodes execute the same transactions. AI Network can support multiple languages and several types of SREs host different types of functions. While blockchain records transactions, execution for the transaction happens on off-chain worker nodes.
+
+AI Network Architecture
+While most of the blockchains today try to have all components necessary for smart contracts inside their networks, AI Network divides them into three components: storage, communication, and computation. AI Network blockchain is responsible for recording communication in order, and computation happens on off-chain components, so-called AIN Functions on top of Secure Runtime Environment (SRE). Big Storage is an adapter which gathers different types of storage such as Amazon S3, Google Cloud Storage, and IPFS. More sophisticated reasoning behind this architecture is described in the whitepaper. This document’s focus will be on the technical specification of the event-driven architecture between AIN blockchain and AIN Functions.
+
+AI Network Blockchain
+AI Network blockchain is responsible for managing uploaded programs, resource providers, and incoming requests from clients. AIN blockchain design principles are as follows:
+Asynchronous & Stateless: All Ethereum smart contract operations are stateful, and contract calls cannot be executed in parallel. AIN blockchain starts operation by setting a value for the path in the blockchain's database. Each worker for this operation then records their result in this designated path. Unless there are duplicated attempts to change the value of the path at the same time, operations can run in parallel. 
+Composable: Developers often use third-party API to enhance the application’s features, but maintaining upgrades from different API providers is not an easy task. In the worst case, API providers may switch their billing plans or deprecate old APIs which may be critical to operating applications. AI Network functions can become ownerless like blockchain smart contracts, and developers no longer have to worry about functions being modified unexpectedly. This enables developers to design stable microservice architecture for their applications.
+Lightweight & Fast: Transactions store a very small amount of data (~250bytes), which is transmitted to the network through a gossip protocol. While blockchain nodes are capable of quickly recording these lightweight transactions at scale, workers are also free to join anytime and can start processing jobs triggered by the blockchain state change.
+Sharding: AIN blockchain stores database state in a tree structure. This allows the database to be easily partitioned into multiple sub-trees. Besides genesis PoS rules, each partitioned sub-tree may define its own consensus rules and maintain small blockchain for each sub-tree.
+
+
+AI Network works as application backend. The lifecycle of application request is as follows.
+Client (dApp) sends transactions to blockchain
+Block state of blockchain node is updated by the transaction.
+Block state listener listens to the path and triggers event to the worker.
+AIN workers executes functions for the path and may generate another transactions. If it generates another transaction it goes to (2) and updates block state.
+Dapp registers listener to the blockchain data and gets result through the modified blockchain state.
+
+
+Transactions (seonghwa)
+Each transaction results in the state transition, and the transaction can be categorized into two types: money transfer & key-value transaction.
+From: 0x7e17...3f9eca
+Time: 3 seconds ago
+Nonce: 606380
+Amount: 10 (0 when the data field is used)
+Data: (empty when the transaction is for transfer)
+Tx-Fee: Stake
+Data may include one of the following information.
+SetValue: follow/{from}/{to} => true
+(optional) read_concern: n => suggest the value is recommended to be read after n block confirmation
+Trigger: follow/{from}/{to} => Function Hash
+Rules: follow/{from}/{to} => {.write: pk}
+
+Rules (seonghwa)
+….
+Block generation (lia)
+Transactions are grouped every 5 seconds and attached to AI Network blockchain. Consensus Algorithm: Proof-of-Stake (PoS)
+
+Block State
+Each node maintains block state by parsing all blockchain data gathered prior to the current timestamp. Block state includes (1) balance of each public key, (2) key and value database. The key value database can be modified by SetValue transactions. The SetValue transaction can be triggered initially by the client, and designated AIN Triggers watching the corresponding path can generate additional SetValue transaction. 
+
+// block 생성될 때 기준 state + pending transaction state 만들어지는 절차 추가..
+Read Concern
+Transactions may specify read concern to indicate recommended block confirmation for the value to be valid. Even 0 confirmation can be used if the reverted operation does not cause significant flaws. For example, if the user clicked ‘like’ operation, it might be a good idea to update UI for the like count right after the interaction has happened if the broadcasted event can be accepted most of the time. In the worst case scenario, the like count shown in the UI may not be included in the block, but normally, this is not the end of the world.
+
+
+Fig. a/e/g is not included in the block state as it is recommended to be read after 1 block confirmation. read_concern 0 does not guarantee this value will be in the block, but it still can be useful to the application which requires an immediate response. 
+
+If multiple transactions try to modify the same path, only the last one is valid. For example, if tx1 is {a/b: 1} and tx2 is {a/b: 2}, the last value 2 is the one that is valid. This applies to the read_concern as well. If tx1 is {a/b: 1, read_concern: 1} and tx2 is {a/b: 2, read_concern: 2}, a/b path is not recommended to be read until 2 block confirmations.
+
+
+Serverless Computing and AIN Functions
+In traditional server-based computing, users need to prepare the server, install OS and necessary drivers and software. Then, users need to manage servers and take care of hardware and software upgrades. To maintain highly-available and scalable servers, users also need to configure load-balancers. The idea behind serverless computing is for developers to focus on writing application code.
+
+
+Figure1. AIN Triggers listen for value changes of specific paths in the blockchain state. When a trigger is invoked, AIN workers generate additional transactions as a result. These additional transactions may subsequently trigger other workers if necessary.
+
+The AIN Functions for AI Network allow automatic execution of back-end code in response to two types of events: (1) Blockchain state changes. (2) HTTP endpoint calls. The code and related data are stored in Big Storage and runs in a managed environment of AIN worker.  The detailed examples for running machine learning using Big Storage and workers are described in architecture paper. Developers do not need to manage and resize the server by themselves. Unlike EVM executed by the on-chain node, AIN triggers consist of off-chain workers.
+Characteristics
+Serverless: No need to manage server configuration. The code is publicly deployed instantly
+Configurable ownership: Deployed program can be managed by different owners. It is possible to deploy fully ownerless function. It means authors may not have permission to modify or destroy deployed function.
+
+Developer Experience
+Step 1. Open source code from http://cloud.ainetwork.ai
+Step 2. Edit / Run code using Web IDE 
+Step 3. Deploy when it is ready. The following items are required when deploying a function.
+Runtime. i.e.) Tensorflow, Node.js 8
+Trigger type
+HTTP
+Endpoint
+AI Network Blockchain
+Path
+Function
+
+Node
+
+Fig. A node may host both the blockchain server and worker server so that it can respond to the transaction immediately. The worker part is detachable and hosted by another machine as it can establish a channel to the blockchain state from the other node.
+
+What can we do with AIN Functions?
+Developers can use AIN Functions to modify the blockchain state, with scalable computing power, in response to blockchain events. While applications can use AIN functions to compute arbitrary operations, common use cases can be categorized as:
+
+Application Backend
+Each operation can be defined as a function and groups of functions can serve entire applications. This type of backend infrastructure is is often called microservice architecture.
+dApp backend
+Since smart contracts have a limited capacity, many dApps these days handle only a small part of the application using a smart contract. The rest of the application is managed through centralized cloud services. Using AIN Functions, native AIN coin can be used to get access to cloud resources in a decentralized way.
+Run intensive tasks in the cloud such as machine learning
+A training process can be decomposed into small batch jobs and many workers can join forces to build the large model.
+Integration with third-party services and APIs
+스마트 컨트랙의 단점 third-party 연동. A function is a place where the blockchain state meets external resources. Workers who execute functions may call third-party services and APIs to generate the result.
+Notify users when something interesting happens
+Transactions generate events for the specific path and workers can respond to corresponding events. The worker may call external notification services to notify users about interesting events.
+
+
+
+AI Network Blockchain Scalability 
+An application in AI Network may generate millions of transactions and many of them are not directly related to other applications. If full nodes maintain one giant tree, it can grow very large. AI Network blockchain solves scalability issue by partitioning the global state tree into several sub-tree states.
+
+There are three areas of scaling: data scaling, computation scaling, and state scaling. While the most of EVM based blockchains have to deal with all three areas and suffers from sharding them, AI Network blockchain can be only concerned with the state sharding because blockchain’s responsibility is limited to state management only. In AI Network blockchain, data and computation are managed off-chain, and computation is triggered by the state change. The state is a tree structure, which can be easily partitioned.
+Sharding
+A shard in AIN blockchain maintains a subset of the global state tree. Each of the multiple shards is processed on a separate small blockchain instance, thus greatly increasing a blockchain’s total throughput.
+
+Each shard validates a small part of the transaction history. It is known that POW consensus algorithm can’t be used in conjunction with sharding. This is because the computation power required to attack a shard is significantly less than the computing power required to attack the entire blockchain. Thus proof of stake (PoS) consensus algorithms are used for each shard, and only designated nodes who is authorized to commit their stakes are allowed to participate in block validation. 
+
+The state tree is partitioned into relevant subtree and transactions for the subtree are recorded in a child block. Once the child blocks are branched out from the parent blocks, the small headers of child blocks have to be recorded on the main chain.
+Branch and report
+For forking shard chains from the parent chain, a child first records branch transaction into the parent chain. Branch transaction includes the subtree path it wants to be in charge and the rules for reporting block headers as the new chain grows. After the branch transaction included in the parent chain, validators in the child chain are responsible for processing transactions regarding data for subtree state. The branch transaction creates a new genesis block for the child chain which includes the consensus rule for managing the new branch. When the forger of the child chain broadcast the new block, the forger generates report transaction for recording the header of the block into the parent chain. The child block can generate one report transaction per block while the parent block can include multiple report transactions from different shards.
+
+
+
+Fig. The diagram shows how the child state is branched from the root chain. After the branch, the child paths are managed by the child chain and only the header hash is recorded in the root state.
+
+
+Fig. The diagram shows how multiple children can report to the parent block. The branch can be recursive. For example, child 1-1 is a child of child 1 which is the child of the root.
+
+
+AIN Trigger Scenarios
+
+Simple request and response
+Initialization
+Client: {op: “set_rule”, path: “deposit/deposit_pk”, value: {.transferable: auth.pk === worker_pk && job/result.length() > 10000 .admin: immutable}}
+{op: “set_rule”, path: “job/request”, path: {.write: auth.pk === client_pk .admin: immutable}}
+{op: “set_rule”, path: “job/result”, path: {.write: auth.pk === worker_pk .admin: immutable}}
+
+Upload packaged function (file)  to Storage => result: function_hash
+Runtime: Nodejs
+Code
+ain_blockchain.onWrite(ref,function (key, a, b) {
+  ain.sendTransaction({op: “set_value”, `job/result/${key}`, a + b})
+}
+{op: “set_trigger”, “job/request/${key}”, function_hash}
+Client: Transfer 10 to deposit/deposit_pk
+
+Job request
+Client: {op: “set_value”, “job/request/key_1”, {a: 10, b:10}}
+
+Job result
+Worker: {op: “set_value”, “job/result/key_1”, 20}
+
+Payment
+Worker: Transfer 10 from deposit/deposit_pk to worker_pk 
+
+
+Reference
+Beigepaper: An Ethereum Technical Specification  https://github.com/chronaeon/beigepaper/blob/master/beigepaper.pdf
