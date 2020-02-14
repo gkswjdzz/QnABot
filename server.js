@@ -1,7 +1,7 @@
 var express = require("express"),
   cors = require("cors"),
-  fs = require("fs")
-var request = require('request-promise-native')
+  fs = require("fs"),
+  request = require('request-promise-native')
 var app = express()
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
@@ -42,12 +42,13 @@ app.get('/chat', async function (req, res) {
     }
     console.log(bot_id, question)
     
-    console.log('Here1')
+    console.log('request from ' + bot_id + ', question is ' + question)
     const prev_q = table[bot_id]['prev_q']
     const prev_a = table[bot_id]['prev_a']
     const context = table[bot_id]['context']    
 
     // form data
+    // python post arguments
     let postData = {
       prev_q : prev_q,
       prev_a : prev_a,
@@ -57,21 +58,24 @@ app.get('/chat', async function (req, res) {
       
     // request option
     var options = {
+      //python server
       url:'http://127.0.0.1:5000/chat',
       method: 'POST',
       form: postData
     };
 
+    //request to python server 0.0.0.0:5000
     request(options, function (error, response, body) {
       // in addition to parsing the value, deal with possible errors
       if (error) return reject(error);
       try {
-          // JSON.parse() can throw an exception if not valid JSON
-          console.log(body)
-          res.send(body)
-          resolve(body)
+        console.log('answer is ')
+        console.log(body)
+        res.send(body)
+        resolve(body)
       } catch(e) {
-          reject(e);
+        reject(e);
+        res.send(500);
       }
     })
     
