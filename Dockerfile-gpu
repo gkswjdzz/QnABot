@@ -14,7 +14,6 @@ RUN apt install wget
 WORKDIR /workspace
 
 RUN mkdir /workspace/model
-COPY model /workspace/model
 
 COPY requirements.txt .
 RUN pip install -r ./requirements.txt
@@ -23,6 +22,8 @@ RUN python -m spacy download en_core_web_md
 COPY package.json .
 RUN npm install
 RUN apt-get install -y supervisor
+
+COPY model /workspace/model
 
 COPY server.py .
 COPY server.js .
