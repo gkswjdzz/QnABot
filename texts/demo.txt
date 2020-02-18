@@ -1,0 +1,216 @@
+What is Ainize
+A Serverless Platform for Open-source Projects
+A programming code is merely a text, unless it's been configured with proper computing resources. Ainize is about bringing Open-source projects to life. With Ainize, you can Deploy for free
+Any Open-source project can be deployed to Ainize at no cost. Once it's deployed, you will be given endpoints and start using them with APIs. Feel free to share them as live services!
+Not only does Ainize takes care of everything you need to run, but it also provides a large scale of service deployment. As of now, a project can utilize up to 2GB of memory and 1 vCPU (n1-standard-1, 3.75GB). 
+Once a project is Ainized (deployed on Ainize), users can access the project via simply clicking 'Run on Ainize' button on Github repository.
+AI Network is a global backend infrastructure that transforms millions of open source projects into live services (a.k.a. Open Resource).
+The advent of the Open Source movement provided an opportunity for anyone to freely access, distribute, and modify the software. 
+Since the GNU Project by Richard Stallman in 1983, it has become possible to run computers using only free, Open Source software.
+Today, even giant technology companies have begun open sourcing their code to enable developers to contribute to their services.
+Despite this progress, a growing number of Open Source projects are not instantly executable in a regular developer’s environment.
+This is because the source code is developed on different types of computers in different runtime environment (i.e., IoT), and programs require vast amounts of resources or specialized hardware such as GPUs or TPUs (i.e., Machine Learning).
+Back in 1983, Stallman envisaged that anyone should be able to augment programs that were initially written by other developers.
+If a small number of developers can run a program, this will prevent other developers from offering contributions to the Open Source project and impede progress of the project.
+Open Resource starts by decoupling the role of developers from the role of resource providers.
+Developers should be able to upload their programs on the open network freely, and resource providers should only be concerned with operating the program and sharing the revenue in return.
+By decoupling these two responsibilities, liability and cost of resource management will no longer belong to developers.
+The AI Network blockchain will serve as a bridge between the program and the resource, offering a stable way to utilize Open Source solutions.
+Decoupling the role of resource providers from the role of developers can boost the number of programs published as developers no longer have to worry about maintaining application runtime environments.
+Through this shift towards Open Resource, we expect composability and interoperability of solutions to be significantly improved.
+Developers currently make use of third-party solutions through the API economy, which exposes organizations’ digital assets via application programming interfaces (APIs).
+However, there are two salient problems with the current API economy :
+● There currently exists no sound payment system for computers to pay with for the globalized micro API executions.
+● Ownership belongs to API providers, allowing these providers to change charging policies or service structures at any time.
+AS-IS: Each company is building its own AI solutions from scratch.
+Although lots of solutions are utilizing open source code, they are contained in the company's stack and cannot be shared externally.
+TO-BE: Components are shared as a service on the blockchain, and do not need to be separately deployed every time.
+Blockchains and cryptocurrencies have a few unique properties that can potentially address some of the problems of API ownership.
+Blockchains ensure that no single participant controls the solution and allow anybody to utilize services on a blockchain through a protected access channel.
+Mass-market usage of existing blockchains are mainly focusing on financial use cases.
+To date, even the most elegant solution available is not scalable enough for general purpose computing.
+We believe that a highly concurrent system built upon trusted frameworks can deliver a lower-cost, more accessible, and more connected global cloud network.
+Followings are our beliefs and motivations for Open Resource initiative.
+Integrity is especially crucial for immutable programs, which can only be killed by a consensus across all nodes.
+Introducing AI Network
+AI Network is a new kind of cloud service platform built on the foundation of blockchain technology.
+ Through this novel infrastructure, microservices developed by individual developers can be instantly integrated into the network of computers.
+ AI Network has three characteristics to create a more intuitive backend system:
+1. It is built on a concurrent, scalable, and reliable blockchain.
+2. It is designed to serve applications, with quality guaranteed through a decentralized contract between developers and resource providers.
+3. It is governed by the independent developer community, which aims to contribute to the evolution of the Open Source community.
+Imagine an open, interoperable ecosystem of cloud services, built by developers and organizations to help operate global applications which people use on a daily basis.
+Instead, developers all over the world contribute small parts of applications, thus making constant small improvements to the global applications that people around the world use everyday.
+ In order to achieve this long-term vision, the blockchain is built from the ground up to prioritize scalability, concurrency, and efficiency in computational throughput.
+The AI Network currency is achieved through the AI Network Blockchain. Our ecosystem's unit of currency is called AIN. AIN needs to be reserved when accessing deployed services on blockchain.
+ To have confidence that its value will remain relatively stable over time, solution providers and resource providers agree on contracts, and a certain amount of AIN is deposited in order to guarantee this contract.
+ Through these contracts, a significant portion of AIN will be deposited on blockchain building trust in its intrinsic value. AI Network Blockchain is an open source project, which allows millions of open source projects to maintain their services online.
+AI Network blockchain is a permissionless blockchain, which means any computer in the world is free to participate as a validator node or a resource provider.
+ Validators are responsible for verifying communication between developers and resource providers.
+Developers who initiate services are capable of configuring permission settings.
+This means only entities which meet specific requirements can be resource nodes for a certain deployed program.
+ In summary, the AI Network blockchain composed of permissionless nodes records rules for service communication, and programs are then executed off the blockchain by resource providers who monitor the blockchain, following
+the communication rules agreed on the blockchain.
+The AI Network Blockchain is designed to provide secure access to computers connected to the network.
+This secure network will form a serverless computing architecture by utilizing accessible computers in the network.
+
+The goal of AI Network is to serve millions of open source projects.
+ As such, the AI Network is designed for operating different types of software on the most suitable runtime environment.
+ If the project is about deep learning, it might need high performance GPU, or if the project is about sensor network, it might need millions of small computers.
+ Ethereum supports only one type of language called Solidity and its runtime environment is called EVM.
+ AI Network runs a variety of languages on heterogeneous types of runtime environments.
+ We refer to these environments as Secure Runtime Environment, or SRE for short.
+ AI Network does not have a native smart contract language such as Solidity.
+ Insead, workers in resource provider pools are listening to blockchain events to participate in the execution.
+ Thus, blockchain’s responsibility is narrowed down to propagating real-time events, and recording life cycle of executions.
+Unlike synchronous execution of the smart contract, the AI network prioritises real-time execution over preserving execution order.
+ This post-consensus protocol enables high transaction throughput, low latency, and high concurrency in processing transactions.
+ AI Network’s execution can be asynchronous, and the arrival of results may be different from initiation order.
+ Later results may get interrupted and dropped.
+ As such, the blockchain plays a vital role in maintaining a consensus and keeping the consistent state among lists of conflicting executions.
+AI Network Blockchain maintains a single tree data structure in a key-value storage that records the states from the complete history of transactions.
+ This implementation simplifies the work of applications accessing the blockchain, allowing them to read the specific part of the data in a unified schema.
+The blockchain wallet normally gives access to a user’s money, managing keys and addresses, creating and signing transactions.
+ In the world of financial blockchains, users are humans, and addresses are for managing assets of humans.
+ The AI Network wallet is for computers, and one computer unit holds one payable address.
+ In addition to payment system, this address serves as an access key for computing resources of the node.
+ For example, it is possible to open a shell connection to the node on the blockchain using the wallet as a secure connection scheme.
+AI Network Currency
+The AI Network currency is a digital currency designed both for humans and computers.
+It is designed to make computational costs more measurable.
+ Using the blockchain protocol, AIN maintains stability during the execution of services by reserving computational power for a specific duration of time.
+ This means that anyone with AIN coins has a high degree of certainty that they can use their digital currency for accessing valuable backend services.
+This also means that one AIN will not always guarantee some fixed amount of GPUs or CPUs.
+ Instead, the value of one AIN may fluctuate along with the value of the total computing power and solutions in the network.
+ However, since contracts always hold a significant amount of total AIN at any time, volatility of the currency should be minimal.
+Therefore AIN holders can trust the currency’s ability to preserve value for processing agreed numbers of requests offered by the resource provider.
+Fundamentally, an AIN token is a utility token that is used to purchase certain services available on the blockchain.
+In order to provide a stable service, the developer of the service initiates the contract with resource providers.
+Resource providers may then make a deposit, guaranteeing resource usage for the specific amount of time.
+After the contract, the resource provider can share the revenue of the service.
+This contract enables applications to have a stable backend, and decouples service quality from AIN price fluctuation.
+Eventually, depositing in contracts will play a pivotal role in currency stabilization, allowing AIN to maintain consistent intrinsic value.
+Staking pool ensures quality and accountability for contract stakeholders.
+AIN is charged when executing the program, and the executor can be application users, developers, or another program.
+The executor of the program who uses the service also has an option of preemptive buying.
+With this option, the executor will be able to reserve usage of services from a specific resource provider at a fixed AIN price for a fixed period, as well as to eliminate the risk of AIN price fluctuation during execution.
+In summary, AIN tokens can be used to secure stable resources.
+Service qualities such as real-timeness and queries per second (QPS) are guaranteed through executors’ and resource providers’ deposits.
+Paying for requests in batches reduces unnecessary microtransactions and prevents price fluctuation.
+AI Network Governance is designed for AI Network Blockchain to be a global application backend that empowers millions of Open Source project.
+The governing entity is the AI Network Pte Ltd, headquartered in Singapore.
+The organization is built to facilitate the operation, promotion, and development of the AI Network Blockchain through a consensus among the network’s validator nodes, developers, and resource providers.
+The organization will aid in keeping AI Network’s participants in alignment with the network’s technical roadmap and development goals.
+One of the main responsibilities of AI Network is to establish sustainable operation of AI Network open source projects as a non-profit entities.
+AI Network open source projects grow with the collaboration of decentralized communities based on contribution guidelines and protocols.
+Once we have enough usage volume in the network, the organization will put effort in developing an algorithm for measuring the network value of AI Network.
+Coins are only minted when the algorithm agrees that total computing power in the AI Network has grown enough to warrant the minting of additional coins.
+The algorithm may also decide to burn AIN if total computing power utilized throughout AI Network services has degraded significantly.
+The official ERC-20 token contract for AIN token can be found at https://ainetwork.ai.
+The initial total supply of AIN is 700,000,000 AIN.
+60% of AIN are supposed to be released into the public market, and new tokens will not be minted unless this initial 60% are entirely liquidated.
+The remaining 40% will be reserved for developers of the AI Network Blockchain, and incentives for early participants such as AI solution providers, computing resource providers, and validators.
+AI Network Roadmap
+A testnet of the AI Network blockchain will be launched in the second half of 2019, and the AI Network main-net will be launched in 2020.
+In the following months, AI Network will work with its community to gather feedback on the AI Network Blockchain prototype, and develop it further to a production-ready state.
+In particular, this work will focus on ensuring the reliability, performance, and scalability of the protocol and implementation.
+● The AI Network will publish a detailed technical paper which describes the blockchain for real-time cloud computing, in addition to the architecture paper published in June 2018.
+● The AI Network will prepare tutorials and API documents for developers to build real-time dApps using well-defined blockchain protocols.
+● The AI Network will create a framework for the collaborative development of the technology behind the AI Network Blockchain, using the open source community.
+● The AI Network will continuously monitor the performance of blockchain using various tests such as integration tests, stress tests, and latency tests in collaboration with entities such as AI researchers and cloud service providers.
+● The AI Network will work to foster the development of runtime environments to support popular programming languages and machine learning frameworks.
+ AI Network will also provide an in-depth guide for developers to deploy customized runtime environments and programs on the blockchain.
+How to contribute to AI Network
+The AI Network envisions a diverse network of runtime environments for developers building applications and services globally.
+ Together, we want to enable any developer or an IT company to have affordable and instant access to collaborative application backend.
+ For example, as soon as a developer working individually publishes the code to an Open Source repository, their code is instantly integrated into live services on the AI Network.
+This is merely the beginning of our grand journey, and we ask the members of our community to help, and contribute to our vision.
+ If you believe in what AI Network could do for millions of open source project around the world, share your perspective and join in.
+● If you are a researcher or protocol developer, an early preview of the AI Network testnet will be available in the second half of 2019.
+ Once we publish the code, community members can provide feedback instantly.
+ We are committed to undergoing a community-oriented development process, motivating developers to engage in our platform.
+● If your organization is interested in becoming an early resource provider, sign up for an invitation here.
+● If you are interested in converting Open Source project into Open Resource project as early as possible, sign up for an invitation here.
+Conclusion
+Reliable decentralized backend infrastructure can genuinely deliver the promise of a World Computer.
+AI Network is a collaborated backend for open source projects built on top of a scalable and stable blockchain, powered by diverse resource providers around the world, and governed by a global developer community.
+ Together, we hope to rediscover the collaborative power of open source, and solve some of the world's most difficult problems.
+ Bong Joon-ho (Korean: 봉준호, Korean pronunciation: [poːŋ tɕuːnho → poːŋdʑunɦo]; born September 14, 1969) is a South Korean filmmaker. His films feature social themes, genre-mixing, black humor, and sudden mood shifts.[1] In 2017, Metacritic ranked Bong 16th on its list of the 25 best film directors of the 21st century.[2]
+
+Bong first gained recognition for his second feature film, the crime drama Memories of Murder (2003), before achieving commercial success with his subsequent films, the black comedy monster movie The Host (2006) and the dystopian thriller Snowpiercer (2013), both of which are among the highest-grossing films in South Korea.[3]
+
+Two of his films have screened in competition at the Cannes Film Festival—Okja in 2017 and Parasite in 2019, the latter of which earned the first Palme d'Or for a South Korean film.[4][5] For Parasite, Bong received Academy Awards for Best Picture, Best Director, Best Original Screenplay (shared with Han Jin-won), and, on behalf of South Korea, Best International Feature Film.[6][7] He tied the record for most wins in a single ceremony with Walt Disney and is the only person to win four awards for one film.[8][note 1]
+
+
+Contents
+1	Early life
+2	Career
+2.1	Early directing work
+2.2	International success
+2.3	American co-productions
+2.4	Parasite (2019)
+3	Personal life
+4	Filmography
+4.1	Feature film
+4.2	Television
+4.3	Short films
+4.4	Acting
+4.5	Documentary appearances
+5	Awards and nominations
+6	Frequent collaborators
+7	See also
+8	Notes
+9	References
+10	External links
+Early life
+Bong Joon-ho was born in Daegu, South Korea, in 1969, the youngest of four children.[10] His father was Bong Sang-gyun, a graphic and industrial designer and professor, while his mother Park So-young was a full-time housewife.[10][11] Bong's maternal grandfather, Park Taewon, was an esteemed author during the Japanese colonial period, best known for his work A Day in the Life of Kubo the Novelist and his defection to North Korea in 1950.[10][12] Bong's older brother Bong Joon-soo is an English professor at the Seoul National University, while his older sister Bong Ji-hee teaches fashion styling at Anyang University.[11]
+
+While Bong was in elementary school, the family relocated to Seoul, taking up residence in Jamsil-dong by the Han River.[12] Bong enrolled in Yonsei University in 1988, majoring in sociology.[10] College campuses such as Yonsei's were then hotbeds for the South Korean democracy movement, and Bong was an active participant of student demonstrations, frequently subjected to tear gas early in his college years.[10][13]
+
+Bong served a two-year term in the military in accordance with South Korea's compulsory military service before returning to college in 1992.[10] He co-founded a film club named Yellow Door with students from neighboring universities.[10] As a member of the club, Bong made his first films, including a stop-motion short titled Looking for Paradise and a 16mm short titled White Man.[10] He graduated from Yonsei University in 1995.[10]
+
+In the early 1990s, Bong completed a two-year program at the Korean Academy of Film Arts. While there, he made many 16mm short films. His graduation films Memory Within the Frame and Incoherence were invited to screen at the Vancouver and Hong Kong international film festivals. He also collaborated on several works with his classmates — which included working as cinematographer on the highly acclaimed short 2001 Imagine, directed by his friend Jang Joon-hwan. Aside from cinematography on Hur Jae-young's short A Hat, Bong was also lighting director on an early short Sounds From Heaven and Earth by Choi Equan, and The Love of a Grape Seed.[1] Bong studied Martin Scorsese films and cited him as one of his major filmmaking influences in his Academy Award for Best Director acceptance speech for Parasite.[14]
+
+Career
+After graduating, he spent the next five years contributing in various capacities to works by other directors. He received a partial screenplay credit on the anthology film Seven Reasons Why Beer is Better Than a Lover (1996); both screenplay and assistant director credits on Park Ki-yong's debut Motel Cactus (1997); and is one of four writers (along with Jang Joon-hwan) credited for the screenplay of Phantom the Submarine (1999).[1]
+
+Early directing work
+Shortly afterwards, Bong began shooting his first feature Barking Dogs Never Bite (2000) under producer Cha Seung-jae, who had overseen the production of both Motel Cactus and Phantom the Submarine.[15] The film, about a low-ranking university lecturer who abducts a neighbor's dog, was shot in the same apartment complex where Bong had lived after his marriage.[16] At the time of its release in February 2000, it received little commercial interest but some positive critical reviews. It was invited to the competition section of Spain's San Sebastián International Film Festival, and won awards at Slamdance Film Festival and Hong Kong International Film Festival. Slowly building international word of mouth also helped the film financially — over two years after its local release, the film reached its financial break-even point due to sales to overseas territories.[1][better source needed]
+
+Bong's second film, Memories of Murder (2003), a much larger project, was adapted from a stage play centered on a real-life serial killer who terrorized a rural town in the 1980s and was never caught (although a suspect confessed to the crime in 2019).[17] Production of the film was a difficult process (the film set a local record for the number of locations it utilized).[citation needed] It was released in April 2003 and proved a critical and popular success. Word of mouth drove the film to sell over five million tickets (rescuing Cha Seung-jae's production company Sidus from near-bankruptcy), and a string of local honors followed, including Best Picture, Best Director, Best Actor (for Song Kang-ho) and Best Lighting prizes at the 2003 Grand Bell Awards. Although passed over by the Cannes and Venice Film Festivals, the film eventually received its international premiere, again at San Sebastián, where it picked up three awards including Best Director. The film also received an unusually strong critical reception on its release in foreign territories such as France and the U.S.[1]
+
+
+Joon-ho at the 25th Independent Spirit Awards on March 5, 2010
+Following this, Bong took some time to contribute short films to two anthology film projects. Influenza (2004) is a 30-minute work acted out entirely in front of real CCTV cameras stationed throughout Seoul. The film, which charts a desperate man's turn to violent crime over the space of five years, was commissioned by the Jeonju International Film Festival, together with works by Japanese director Sogo Ishii and Hong Kong-based Yu Lik-wai. Twentidentity, meanwhile, is a 20-part anthology film made by alumni of the Korean Academy of Film Arts, on the occasion of the school's 20th anniversary. Bong's contribution is Sink & Rise (2003), a work set alongside the Han River.[1]
+
+International success
+The Host (2006) marked a step up in scale in Bong's career, and indeed for the Korean film industry as a whole.[citation needed] The big-budget ($12 million) work centered on a fictional monster that rises up out of the Han River to wreak havoc on the people of Seoul — and on one family in particular. Featuring many of the actors who had appeared in his previous films, the film was the focus of strong audience interest even before it started shooting, but many doubts were raised[by whom?] about whether a Korean production could rise to the challenge of creating a full-fledged, believable digital monster. After initially contacting New Zealand's Weta Digital — the company responsible for the CGI in The Lord of the Rings — scheduling conflicts led Bong to San Francisco-based The Orphanage, who took on the majority of the effects work. After rushing to meet deadlines, the film received a rapturous premiere in the Directors' Fortnight section of the 2006 Cannes Film Festival. Although local audiences were slightly more critical of The Host than attendees at Cannes, the film was nonetheless a major summer hit. With theater owners calling for more and more prints, the film enjoyed South Korea's widest release ever (on over a third of the nation's 1,800 screens) and set a new box-office record with 13 million tickets sold. The Host was quickly sold around the world, and US studio Universal bought the remake rights.[1][18]
+
+Bong along with Michel Gondry and French director Leos Carax, directed a segment of Tokyo! (2008), a triptych feature telling three separate tales of the city. Bong's segment is about a man who has lived for a decade as a "hikikomori" — the term used in Japan for people unable to adjust to society who do not leave their homes — and what happens when he falls in love with a pizza delivery girl.[19]
+
+Bong's fourth feature film Mother (2009) is the story of a doting mother who struggles to save her disabled son from a murder accusation. It premiered in the Un Certain Regard section at the 2009 Cannes Film Festival to much acclaim, particularly for actress Kim Hye-ja. Mother repeated its critical success locally and in the international film festival circuit. The film appeared on many film critics' "best-of" lists of 2010.[20]
+
+In 2011, Bong contributed to 3.11 A Sense of Home, another anthology film, each segment being 3 minutes 11 seconds in duration, addressing the theme of home. The films were made by 21 filmmakers in response to the devastating earthquake and tsunami which hit the Tohoku region of Japan on March 11, 2011. The film screened on the first anniversary of the disaster.[21] In Bong's short film Iki, a teenage girl finds a toddler, seemingly dead, on a beach.[22]
+
+That same year, Bong served as a jury member for the 27th Sundance Film Festival.[23][24] He was also the head of the jury for the Caméra d'Or section of the 2011 Cannes Film Festival,[25][26] and the 2013 Edinburgh International Film Festival.[27]
+
+American co-productions
+
+Joon-ho at the 2013 Deauville American Film Festival
+Bong's first English-language film, Snowpiercer, was released in 2013. It is based on the graphic novel, Le Transperceneige, by Jean-Marc Rochette and Jacques Lob,[28][29][30][31][32] and set largely on a futuristic train where those on board are separated according to their social status. Snowpiercer premiered at the Times Square on July 29, 2013 in Seoul, South Korea,[33] before screening at the Deauville American Film Festival as the closing film on September 7, 2013,[34] the Berlin International Film Festival as the part of Berlin's Forum sidebar on February 7, 2014,[35] opening the Los Angeles Film Festival on June 11, 2014,[36] and the Edinburgh International Film Festival on June 22, 2014.[37] Upon release in cinemas, the film was met with near-universal praise and strong ticket sales, both in South Korea and abroad.[38][39] As of April 2014, it is the tenth highest-grossing domestic film in South Korea, with 9,350,141 admissions. The film holds the domestic record for the fastest movie (domestic and foreign) to reach four million admissions, which it achieved in its fifth day after premiere, and another record for the highest weekend figure (from Friday to Sunday) for a Korean film, with 2.26 million viewers.[40] In addition to receiving several awards and nominations, Snowpiercer appeared on several critics' lists of the ten best films of 2014.[41]
+
+In 2015, Bong's next film Okja was announced.[42] On April 30, 2015, screenwriter Jon Ronson announced on his Twitter account that he was writing the second draft of Bong's screenplay for the film.[43] Darius Khondji joined the film as cinematographer in February 2016.[44] Filming for the project began in April 2016.[45]
+
+Okja premiered at the 2017 Cannes Film Festival, where it competed for the Palme d'Or and sparked controversy due to it being produced by Netflix.[46] The film was met with boos, mixed with applause, during a press screening at the film festival, once when the Netflix logo appeared on screen and again during a technical glitch (which meant the film was projected in an incorrect aspect ratio for its first seven minutes).[47][48][49] The festival later issued an apology to the filmmakers.[50] However, despite the studio's negative response, the film itself received a four-minute standing ovation following its actual premiere.[51] The film was later released on Netflix on June 28, 2017, and received positive reviews.[52] On the film review aggregator website Rotten Tomatoes, the film has an approval rating of 84% based on 125 reviews, with a weighted average of 7.5/10. The site's critical consensus reads, "Okja sees Bong Joon-ho continuing to create defiantly eclectic entertainment – and still hitting more than enough of his narrative targets in the midst of a tricky tonal juggling act."[53] On Metacritic, the film has a score of 76 out of 100, based on 31 critics, indicating "generally favorable reviews".[54] New York Times critic A. O. Scott wrote, "Okja is a miracle of imagination and technique, and Okja insists, with abundant mischief and absolute sincerity, that she possesses a soul."[55]
+
+Parasite (2019)
+
+Joon-ho at the Munich International Film Festival in July 2019
+Bong directed the full Korean-language film Parasite (2019), a dark comedy thriller about a poor family that insinuates itself into a wealthy household. The film premiered at the 2019 Cannes Film Festival, where it won the Palme d'Or, becoming the first Korean film to receive the award and the first film to do so with a unanimous vote since Blue Is the Warmest Colour at the 2013 Festival.[56] The film won the $60,000 Sydney Film Prize at the Sydney Film Festival.[57] At Sydney, Parasite was in competition alongside 11 other features from countries such as North Macedonia, Brazil and Spain, and Australian entrants Mirrah Foulkes's Judy and Punch and Ben Lawrence­'s Hearts and Bones.[58]
+
+Parasite was released in South Korea by CJ Entertainment on May 30, 2019, and in the United States by Neon in late-2019. It received widespread critical acclaim and earned $115 million at the worldwide box office, becoming Bong's highest-grossing release.[59] For Parasite, Bong was nominated for Best Director and Best Screenplay at the 77th Golden Globe Awards, with the film itself winning Best Foreign Language Film.[60]
+
+At the 92nd Academy Awards, Parasite became the first South Korean film to receive an Academy Award nomination in any category, receiving a total of six nominations and winning Best Picture, Best Director, Best Original Screenplay (shared with Han Jin-won), and Best International Feature Film. It was the first time a non-English language film won Best Picture.[61]
+
+Personal life
+Bong was a member of the now defunct New Progressive Party.[62] He has also voiced support for its predecessor, the defunct Democratic Labor Party.

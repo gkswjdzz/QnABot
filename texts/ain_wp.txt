@@ -1,5 +1,4 @@
-What is Ainize
-A Serverless Platform for Open-source Projects
+Ainize is A Serverless Platform for Open-source Projects
 A programming code is merely a text, unless it's been configured with proper computing resources. Ainize is about bringing Open-source projects to life. With Ainize, you can Deploy for free
 Any Open-source project can be deployed to Ainize at no cost. Once it's deployed, you will be given endpoints and start using them with APIs. Feel free to share them as live services!
 Not only does Ainize takes care of everything you need to run, but it also provides a large scale of service deployment. As of now, a project can utilize up to 2GB of memory and 1 vCPU (n1-standard-1, 3.75GB). 
