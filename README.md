@@ -4,10 +4,11 @@
 
 	pretrained_model : https://drive.google.com/file/d/15HOJmRizBrgoPPVDHKpvSO2tNf0k-d8f/view?usp=sharing
 
-After download pretrained_model, put them model folder
-If you want to run api server with gpu, change name of Dockerfile-gpu to Dockerfile.
+<!--After download pretrained_model, put them model folder
+If you want to run api server with gpu, change name of Dockerfile-gpu to Dockerfile.-->
 
-	docker build -t qnabot .
+	docker build -t qnabot -f Dockerfile-cpu .
+	docker build -t qnabot -f Dockerfile-gpu .
 
 ### Run Docker
 

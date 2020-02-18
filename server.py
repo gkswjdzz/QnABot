@@ -1,4 +1,7 @@
-from flask import Flask, request, render_template
+import os
+import glob
+
+from flask import Flask, request, render_template, make_response
 from flask import send_file,session,jsonify
 import string
 import random
@@ -6,23 +9,28 @@ from infer import *
 
 app = Flask(__name__,template_folder='static')
 
-#from server.js
-@app.route('/chat',methods=['POST'])
-def chat():
-	if request.method == 'POST':
-		context = request.form.get('context')
-		question = request.form.get('question')
-		prev_q = request.form.get('prev_q')
-		prev_a = request.form.get('prev_a')
-		answer = iq.predict(context,question,prev_q,prev_a)
-		print('question : ' + question)
-		print('prev_q : ' + prev_q)
-		print('prev_a : ' + prev_a)
-		
-		return answer
+textfiles = {}
+for textfile in glob.glob('./texts/*.txt'):
+	filename = os.path.basename(textfile).split('.')[0]
+	textfiles[filename] = open(textfile).read()
 
-SERVER = "0.0.0.0:5000"
+@app.route('/chat',methods=['GET'])
+def chat():
+	bot_id = request.args.get('bot_id', '')
+	if bot_id == None:
+	    return make_response('bot_id not found!', 500)
+
+	context = textfiles.get(bot_id, '')
+	
+	question = request.args.get('question', '')
+	if question == None:
+		return make_response('question not found!', 500)
+	
+	answer = iq.predict(context, question, '', '')
+	print('question : ' + question)
+	return answer
+
 iq = InferCoQA('model')
 print('done loading model ..')
 
-app.run(host='0.0.0.0', debug=True) 
+app.run(host='0.0.0.0', port=80, debug=True) 

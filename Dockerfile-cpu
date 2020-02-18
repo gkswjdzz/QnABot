@@ -21,7 +21,8 @@ COPY package.json .
 RUN npm install
 RUN apt-get install -y supervisor
 
-COPY model /workspace/model
+#COPY model /workspace/model
+COPY --from=minhocomcomai/qnabot-data /model /workspace/model
 
 COPY server.py .
 COPY server.js .
