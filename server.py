@@ -29,9 +29,10 @@ def chat():
 	answer = iq.predict(context, question, '', '')
 
 	print('question : ' + question)
+	okay = answer not in ('empty', 'unknown')
 	return jsonify(
-        answer=answer,
-        okay=('true' if answer != 'unknown' else 'false'),
+        answer=answer if okay else '',
+        okay=okay,
         question=question
     )
 
