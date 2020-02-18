@@ -1,6 +1,4 @@
 AI Network is a global backend infrastructure that transforms millions of open source projects into live services (a.k.a. Open Resource).
-This document outlines our plans for a real-time, event-driven blockchain platform that aims to initiate innovation in the decentralized application economy, particularly for AI programs.
-Problem Statement
 The advent of the Open Source movement provided an opportunity for anyone to freely access, distribute, and modify the software. 
 Since the GNU Project by Richard Stallman in 1983, it has become possible to run computers using only free, Open Source software.
 Today, even giant technology companies have begun open sourcing their code to enable developers to contribute to their services.
@@ -8,8 +6,6 @@ Despite this progress, a growing number of Open Source projects are not instantl
  This is because the source code is developed on different types of computers in different runtime environment (i.e., IoT), and programs require vast amounts of resources or specialized hardware such as GPUs or TPUs (i.e., Machine Learning).
  Back in 1983, Stallman envisaged that anyone should be able to augment programs that were initially written by other developers.
  If a small number of developers can run a program, this will prevent other developers from offering contributions to the Open Source project and impede progress of the project.
-Open Resource Initiative
-We propose "Open Resource" as the next evolutionary milestone of Stallman's initial Open Source initiative.
  Open Resource starts by decoupling the role of developers from the role of resource providers.
  Developers should be able to upload their programs on the open network freely, and resource providers should only be concerned with operating the program and sharing the revenue in return.
  By decoupling these two responsibilities, liability and cost of resource management will no longer belong to developers.
@@ -30,10 +26,6 @@ However, the performance of existing blockchain systems is not powerful enough t
  To date, even the most elegant solution available is not scalable enough for general purpose computing.
  We believe that a highly concurrent system built upon trusted frameworks can deliver a lower-cost, more accessible, and more connected global cloud network.
 Followings are our beliefs and motivations for Open Resource initiative.
-● We believe that creative implementations of novel ideas should be publishable by developers, without consideration for computational resource restrictions.
-● We believe that global, open, instant, low-cost, ownerless service will create immense opportunity for hosting programs globally.
-● We believe that a global backend infrastructure should be designed and governed, just as public utilities.
-● We believe that we all have a responsibility to help support ethical engineers and continuously uphold the integrity of the AI ecosystem.
  Integrity is especially crucial for immutable programs, which can only be killed by a consensus across all nodes.
 Introducing AI Network
 AI Network is a new kind of cloud service platform built on the foundation of blockchain technology.
@@ -43,27 +35,20 @@ AI Network is a new kind of cloud service platform built on the foundation of bl
 2. It is designed to serve applications, with quality guaranteed through a decentralized contract between developers and resource providers.
 3. It is governed by the independent developer community, which aims to contribute to the evolution of the Open Source community.
 Imagine an open, interoperable ecosystem of cloud services, built by developers and organizations to help operate global applications which people use on a daily basis.
- No single company owns these applications.
- Instead, developers all over the world contribute small parts of applications, thus making constant small improvements to the global applications that people around the world use everyday.
+Instead, developers all over the world contribute small parts of applications, thus making constant small improvements to the global applications that people around the world use everyday.
  In order to achieve this long-term vision, the blockchain is built from the ground up to prioritize scalability, concurrency, and efficiency in computational throughput.
-The AI Network currency is achieved through the “AI Network Blockchain.” Our ecosystem's unit of currency is called “AIN.” AIN needs to be reserved when accessing deployed services on blockchain.
+The AI Network currency is achieved through the AI Network Blockchain. Our ecosystem's unit of currency is called AIN. AIN needs to be reserved when accessing deployed services on blockchain.
  To have confidence that its value will remain relatively stable over time, solution providers and resource providers agree on contracts, and a certain amount of AIN is deposited in order to guarantee this contract.
- Through these contracts, a significant portion of AIN will be deposited on blockchain building trust in its intrinsic value.
-While the AI Network teams play a crucial role in the initial stage of the AI Network Blockchain protocol, the community of developers and resource providers hold the final decision-making authority.
- AI Network Blockchain is an open source project, which allows millions of open source projects to maintain their services online.
+ Through these contracts, a significant portion of AIN will be deposited on blockchain building trust in its intrinsic value. AI Network Blockchain is an open source project, which allows millions of open source projects to maintain their services online.
 AI Network blockchain is a permissionless blockchain, which means any computer in the world is free to participate as a validator node or a resource provider.
  Validators are responsible for verifying communication between developers and resource providers.
 Developers who initiate services are capable of configuring permission settings.
 This means only entities which meet specific requirements can be resource nodes for a certain deployed program.
  In summary, the AI Network blockchain composed of permissionless nodes records rules for service communication, and programs are then executed off the blockchain by resource providers who monitor the blockchain, following
 the communication rules agreed on the blockchain.
-The AI Network Blockchain
 The AI Network Blockchain is designed to provide secure access to computers connected to the network.
- This secure network will form a serverless computing architecture by utilizing accessible computers in the network.
- This section will highlight three requirements regarding the AI Network Blockchain:
-1. Capable of processing any general programming language.
-2. Capable of hosting heterogeneous types of clouds ranging from mobile phones to supercomputers.
-3. Real-time responses to transactions via asynchronous execution.
+This secure network will form a serverless computing architecture by utilizing accessible computers in the network.
+
 The goal of AI Network is to serve millions of open source projects.
  As such, the AI Network is designed for operating different types of software on the most suitable runtime environment.
  If the project is about deep learning, it might need high performance GPU, or if the project is about sensor network, it might need millions of small computers.
@@ -102,7 +87,6 @@ Fundamentally, an AIN token is a utility token that is used to purchase certain 
  Eventually, depositing in contracts will play a pivotal role in currency stabilization, allowing AIN to maintain consistent intrinsic value.
  Staking pool ensures quality and accountability for contract stakeholders.
 AIN is charged when executing the program, and the executor can be application users, developers, or another program.
- The mechanism of the program execution is described by a job specification.
  The executor of the program who uses the service also has an option of preemptive buying.
  With this option, the executor will be able to reserve usage of services from a specific resource provider at a fixed AIN price for a fixed period, as well as to eliminate the risk of AIN price fluctuation during execution.
 In summary, AIN tokens can be used to secure stable resources.
@@ -145,36 +129,6 @@ This is merely the beginning of our grand journey, and we ask the members of our
 ● If your organization is interested in becoming an early resource provider, sign up for an invitation here.
 ● If you are interested in converting Open Source project into Open Resource project as early as possible, sign up for an invitation here.
 Conclusion
-Reliable decentralized backend infrastructure can genuinely deliver the promise of a “World Computer.”
+Reliable decentralized backend infrastructure can genuinely deliver the promise of a World Computer.
 AI Network is a collaborated backend for open source projects built on top of a scalable and stable blockchain, powered by diverse resource providers around the world, and governed by a global developer community.
  Together, we hope to rediscover the collaborative power of open source, and solve some of the world's most difficult problems.
-Importance Notice
-Please read this section carefully.
- If you are in any doubt as to the action you should take, you should consult your legal, financial, tax or other professional advisor(s).
-Please note that the AIN coins are not intended to constitute securities in Singapore or any other jurisdiction.
- Further, this White Paper does not constitute a prospectus or offer document of any sort, and is not intended to constitute an offer of securities or an invitation or solicitation for investment in securities in Singapore or any other jurisdiction.
-This White Paper does not and shall not be read to constitute any opinion or advice to purchase, sell or otherwise invest in any AIN coins, and shall not be relied upon in connection with any decision to purchase, sell or otherwise invest in any AIN coins.
-This White Paper or any information set out therein has not been examined or approved by any regulatory authority in Singapore or elsewhere, and the publication, distribution and dissemination of this White Paper does not imply that the applicable laws, regulatory requirements or rules, whether in Singapore or elsewhere, have been complied with.
-Disclaimer of Liability
-To the extent permitted by the applicable laws, AI Network Pte Ltd (the “Company”) shall not be liable for any indirect, special, incidental, consequential, or exemplary damages of any kind (including, but not limited to, where related to loss of revenue, income or profits, loss of use or data, or damages for business interruption) arising out of or in any way related to any acceptance of or reliance on this White Paper or any part thereof by you, and/or the purchase, sale or use of any AIN Coins by you, regardless of the form of action, whether based in contract, tort (including, but not limited to, simple negligence, whether active, passive or imputed), or any other legal or equitable theory.
-No Representations and Warranties
-The Company does not make, and hereby disclaims, any representation or warranty to any entity or person, including any representation or warranty in respect of the truth, accuracy and completeness of any information set out in this White Paper.
-Forward-Looking Statements
-For the avoidance of doubt, all statements contained in this White Paper that are not statements of historical fact constitute “forward-looking statements”.
- These forward-looking statements reflect the Company’s current views with respect to future events including but not limited to the Company’s proposed operations, financial performance, business strategy and future plans.
- Some of these statements may be identified by forward-looking terms such as “develop”, “developing”, “would”, “will” or other similar terms.
- However, these terms are not the exclusive means of identifying forward-looking statements.
- These forward-looking statements are not guarantees of future performance, and are based upon a number of assumptions and estimates
-which are subject to significant uncertainties that involve risks, many of which are beyond the Company’s control.
- If such risks or uncertainties materialise or such assumptions prove incorrect, plans discussed in this White Paper may not happen as you expect or may not happen at all.
- Accordingly, do not place undue reliance on any forward-looking statements in this White Paper, and the Company shall not be responsible in any way whatsoever on any loss or damage caused by your reliance on any forward-looking statements in this White Paper.
- While the Company may update forward-looking statements from time to time to reflect any change in its expectation with regard to such forward-looking statement or to reflect any change in events, conditions, or circumstances on which any such statement is based, the Company expressly disclaims any obligation or undertaking to do so.
-No Advice
-This White Paper or any part thereof shall not be construed to be business, legal, financial or tax advice regarding the Company or the AIN coins.
- You should consult your own legal, financial, tax or other professional adviser regarding the Company or the AIN coins.
- You should be aware that you may be required to bear the risks, financial or otherwise, of any purchase, sale, receipt, ownership or use of the AIN coins.
-Taxes
-You acknowledge, understand and agree that the purchase, sale, receipt, ownership or use of any AIN coins (which expression shall include tokens and any other similar expressions) may have tax consequences for you in Singapore and/or in any other relevant jurisdiction.
-If you decide to purchase, sell or use any AIN coins, you shall be responsible for determining any and all taxes that are applicable to your purchase, sale, receipt, ownership or use of the AIN coins in the relevant jurisdiction(s) and declaring, reporting and remitting the correct amount of taxes to the relevant tax authorities, or otherwise complying with any other tax obligations in the relevant jurisdiction(s).
- You shall be solely liable for all claims, fines, penalties, punishments or any other forms of liabilities arising from the non-fulfilment or non-performance of any of your obligations in relation to any taxes payable to any tax authorities.
-The Company shall not be responsible for determining any taxes payable to any tax authorities, and/or declaring, reporting and remitting the correct amount of taxes to the relevant tax authorities, and the Company bears no liability or responsibility whatsoever with respect to any tax obligations on or tax consequences to you in relation to your purchase, sale, receipt, ownership or use of any AIN coins.
