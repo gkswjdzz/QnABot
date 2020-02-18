@@ -27,8 +27,14 @@ def chat():
 		return make_response('question not found!', 500)
 	
 	answer = iq.predict(context, question, '', '')
+
 	print('question : ' + question)
-	return answer
+	return jsonify(
+        answer=answer,
+        okay=('true' if answer != 'unknown' else 'false'),
+        question=question
+    )
+
 
 iq = InferCoQA('model')
 print('done loading model ..')
