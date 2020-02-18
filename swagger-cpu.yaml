@@ -27,10 +27,9 @@ paths:
         schema:
           type: string
           enum:
-            - parasite_all
             - parasite_bongjunho
-            - ain_all
             - ain_wp
+            - demo
         example: parasite_all
       - name: question
         in: query
