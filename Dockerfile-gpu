@@ -1,5 +1,3 @@
-
-  
 FROM pytorch/pytorch:latest
 
 CMD ["bash"]
@@ -37,3 +35,5 @@ EXPOSE 80
 
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 CMD ["/usr/bin/supervisord"]
+
+LABEL AINIZE_MEMORY_REQUIREMENT=10Gi
