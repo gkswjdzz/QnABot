@@ -29,19 +29,7 @@ paths:
           enum:
             - parasite_all
             - parasite_bongjunho
-            - parasite_GQ
-            - parasite_guardian
-            - parasite_intercom
-            - parasite_oscars
-            - parasite_vulture
-            - parasite_wiki
-            - parasite_goldderby
-            - DemoC_qna
             - ain_all
-            - ain_arch
-            - ain_faq
-            - ain_glossary
-            - ain_sas
             - ain_wp
         example: parasite_all
       - name: question
@@ -54,9 +42,16 @@ paths:
         200:
           description: Success!
           content:
-            text/plain:
+            application/json:
               schema:
-                type: string
+                type: object
+                properties:
+                  answer:
+                    type: string
+                  okay:
+                    type: string
+                  question:
+                    type: string
         405:
           description: Invalid input
           content: {}

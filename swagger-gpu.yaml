@@ -54,9 +54,16 @@ paths:
         200:
           description: Success!
           content:
-            text/plain:
+            application/json:
               schema:
-                type: string
+                type: object
+                properties:
+                  answer:
+                    type: string
+                  okay:
+                    type: string
+                  question:
+                    type: string
         405:
           description: Invalid input
           content: {}
