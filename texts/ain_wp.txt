@@ -1,32 +1,37 @@
+What is Ainize
+A Serverless Platform for Open-source Projects
+A programming code is merely a text, unless it's been configured with proper computing resources. Ainize is about bringing Open-source projects to life. With Ainize, you can Deploy for free
+Any Open-source project can be deployed to Ainize at no cost. Once it's deployed, you will be given endpoints and start using them with APIs. Feel free to share them as live services!
+Not only does Ainize takes care of everything you need to run, but it also provides a large scale of service deployment. As of now, a project can utilize up to 2GB of memory and 1 vCPU (n1-standard-1, 3.75GB). 
+Once a project is Ainized (deployed on Ainize), users can access the project via simply clicking 'Run on Ainize' button on Github repository.
 AI Network is a global backend infrastructure that transforms millions of open source projects into live services (a.k.a. Open Resource).
 The advent of the Open Source movement provided an opportunity for anyone to freely access, distribute, and modify the software. 
 Since the GNU Project by Richard Stallman in 1983, it has become possible to run computers using only free, Open Source software.
 Today, even giant technology companies have begun open sourcing their code to enable developers to contribute to their services.
 Despite this progress, a growing number of Open Source projects are not instantly executable in a regular developer’s environment.
- This is because the source code is developed on different types of computers in different runtime environment (i.e., IoT), and programs require vast amounts of resources or specialized hardware such as GPUs or TPUs (i.e., Machine Learning).
- Back in 1983, Stallman envisaged that anyone should be able to augment programs that were initially written by other developers.
- If a small number of developers can run a program, this will prevent other developers from offering contributions to the Open Source project and impede progress of the project.
- Open Resource starts by decoupling the role of developers from the role of resource providers.
- Developers should be able to upload their programs on the open network freely, and resource providers should only be concerned with operating the program and sharing the revenue in return.
- By decoupling these two responsibilities, liability and cost of resource management will no longer belong to developers.
- The AI Network blockchain will serve as a bridge between the program and the resource, offering a stable way to utilize Open Source solutions.
- Decoupling the role of resource providers from the role of developers can boost the number of programs published as developers no longer have to worry about maintaining application runtime environments.
+This is because the source code is developed on different types of computers in different runtime environment (i.e., IoT), and programs require vast amounts of resources or specialized hardware such as GPUs or TPUs (i.e., Machine Learning).
+Back in 1983, Stallman envisaged that anyone should be able to augment programs that were initially written by other developers.
+If a small number of developers can run a program, this will prevent other developers from offering contributions to the Open Source project and impede progress of the project.
+Open Resource starts by decoupling the role of developers from the role of resource providers.
+Developers should be able to upload their programs on the open network freely, and resource providers should only be concerned with operating the program and sharing the revenue in return.
+By decoupling these two responsibilities, liability and cost of resource management will no longer belong to developers.
+The AI Network blockchain will serve as a bridge between the program and the resource, offering a stable way to utilize Open Source solutions.
+Decoupling the role of resource providers from the role of developers can boost the number of programs published as developers no longer have to worry about maintaining application runtime environments.
 Through this shift towards Open Resource, we expect composability and interoperability of solutions to be significantly improved.
- Developers currently make use of third-party solutions through the API economy, which exposes organizations’ digital assets via application programming interfaces (APIs).
- However, there are two salient problems with the current API economy :
+Developers currently make use of third-party solutions through the API economy, which exposes organizations’ digital assets via application programming interfaces (APIs).
+However, there are two salient problems with the current API economy :
 ● There currently exists no sound payment system for computers to pay with for the globalized micro API executions.
 ● Ownership belongs to API providers, allowing these providers to change charging policies or service structures at any time.
- AS-IS: Each company is building its own AI solutions from scratch.
- Although lots of solutions are utilizing open source code, they are contained in the company's stack and cannot be shared externally.
- TO-BE: Components are shared as a service on the blockchain, and do not need to be separately deployed every time.
+AS-IS: Each company is building its own AI solutions from scratch.
+Although lots of solutions are utilizing open source code, they are contained in the company's stack and cannot be shared externally.
+TO-BE: Components are shared as a service on the blockchain, and do not need to be separately deployed every time.
 Blockchains and cryptocurrencies have a few unique properties that can potentially address some of the problems of API ownership.
- Blockchains ensure that no single participant controls the solution and allow anybody to utilize services on a blockchain through a protected access channel.
-However, the performance of existing blockchain systems is not powerful enough to serve mainstream cloud services.
- Mass-market usage of existing blockchains are mainly focusing on financial use cases.
- To date, even the most elegant solution available is not scalable enough for general purpose computing.
- We believe that a highly concurrent system built upon trusted frameworks can deliver a lower-cost, more accessible, and more connected global cloud network.
+Blockchains ensure that no single participant controls the solution and allow anybody to utilize services on a blockchain through a protected access channel.
+Mass-market usage of existing blockchains are mainly focusing on financial use cases.
+To date, even the most elegant solution available is not scalable enough for general purpose computing.
+We believe that a highly concurrent system built upon trusted frameworks can deliver a lower-cost, more accessible, and more connected global cloud network.
 Followings are our beliefs and motivations for Open Resource initiative.
- Integrity is especially crucial for immutable programs, which can only be killed by a consensus across all nodes.
+Integrity is especially crucial for immutable programs, which can only be killed by a consensus across all nodes.
 Introducing AI Network
 AI Network is a new kind of cloud service platform built on the foundation of blockchain technology.
  Through this novel infrastructure, microservices developed by individual developers can be instantly integrated into the network of computers.
@@ -80,33 +85,31 @@ This also means that one AIN will not always guarantee some fixed amount of GPUs
  However, since contracts always hold a significant amount of total AIN at any time, volatility of the currency should be minimal.
 Therefore AIN holders can trust the currency’s ability to preserve value for processing agreed numbers of requests offered by the resource provider.
 Fundamentally, an AIN token is a utility token that is used to purchase certain services available on the blockchain.
- In order to provide a stable service, the developer of the service initiates the contract with resource providers.
- Resource providers may then make a deposit, guaranteeing resource usage for the specific amount of time.
- After the contract, the resource provider can share the revenue of the service.
- This contract enables applications to have a stable backend, and decouples service quality from AIN price fluctuation.
- Eventually, depositing in contracts will play a pivotal role in currency stabilization, allowing AIN to maintain consistent intrinsic value.
- Staking pool ensures quality and accountability for contract stakeholders.
+In order to provide a stable service, the developer of the service initiates the contract with resource providers.
+Resource providers may then make a deposit, guaranteeing resource usage for the specific amount of time.
+After the contract, the resource provider can share the revenue of the service.
+This contract enables applications to have a stable backend, and decouples service quality from AIN price fluctuation.
+Eventually, depositing in contracts will play a pivotal role in currency stabilization, allowing AIN to maintain consistent intrinsic value.
+Staking pool ensures quality and accountability for contract stakeholders.
 AIN is charged when executing the program, and the executor can be application users, developers, or another program.
- The executor of the program who uses the service also has an option of preemptive buying.
- With this option, the executor will be able to reserve usage of services from a specific resource provider at a fixed AIN price for a fixed period, as well as to eliminate the risk of AIN price fluctuation during execution.
+The executor of the program who uses the service also has an option of preemptive buying.
+With this option, the executor will be able to reserve usage of services from a specific resource provider at a fixed AIN price for a fixed period, as well as to eliminate the risk of AIN price fluctuation during execution.
 In summary, AIN tokens can be used to secure stable resources.
- Service qualities such as real-timeness and queries per second (QPS) are guaranteed through executors’ and resource providers’ deposits.
+Service qualities such as real-timeness and queries per second (QPS) are guaranteed through executors’ and resource providers’ deposits.
 Paying for requests in batches reduces unnecessary microtransactions and prevents price fluctuation.
 AI Network Governance is designed for AI Network Blockchain to be a global application backend that empowers millions of Open Source project.
- The governing entity is the AI Network Pte Ltd, headquartered in Singapore.
- The organization is built to facilitate the operation, promotion, and development of the AI Network Blockchain through a consensus among the network’s validator nodes, developers, and resource providers.
+The governing entity is the AI Network Pte Ltd, headquartered in Singapore.
+The organization is built to facilitate the operation, promotion, and development of the AI Network Blockchain through a consensus among the network’s validator nodes, developers, and resource providers.
 The organization will aid in keeping AI Network’s participants in alignment with the network’s technical roadmap and development goals.
- One of the main responsibilities of AI Network is to establish sustainable operation of AI Network open source projects as a non-profit entities.
- AI Network open source projects grow with the collaboration of decentralized communities based on contribution guidelines and protocols.
+One of the main responsibilities of AI Network is to establish sustainable operation of AI Network open source projects as a non-profit entities.
+AI Network open source projects grow with the collaboration of decentralized communities based on contribution guidelines and protocols.
 Once we have enough usage volume in the network, the organization will put effort in developing an algorithm for measuring the network value of AI Network.
- The developer committee will accept one of the proposed solutions, and the agreed algorithm will be constantly upgraded.
- Coins are only minted when the algorithm agrees that total computing power in the AI Network has grown enough to warrant the minting of additional coins.
- The algorithm may also decide to burn AIN if total computing power utilized throughout AI Network services has degraded significantly.
- The official ERC-20 token contract for AIN token can be found at https://ainetwork.ai.
- Once the AI Network blockchain is launched, AIN ERC-20 will be swapped 1:1 with the main-net AIN.
- The initial total supply of AIN is 700,000,000 AIN.
- 60% of AIN are supposed to be released into the public market, and new tokens will not be minted unless this initial 60% are entirely liquidated.
- The remaining 40% will be reserved for developers of the AI Network Blockchain, and incentives for early participants such as AI solution providers, computing resource providers, and validators.
+Coins are only minted when the algorithm agrees that total computing power in the AI Network has grown enough to warrant the minting of additional coins.
+The algorithm may also decide to burn AIN if total computing power utilized throughout AI Network services has degraded significantly.
+The official ERC-20 token contract for AIN token can be found at https://ainetwork.ai.
+The initial total supply of AIN is 700,000,000 AIN.
+60% of AIN are supposed to be released into the public market, and new tokens will not be minted unless this initial 60% are entirely liquidated.
+The remaining 40% will be reserved for developers of the AI Network Blockchain, and incentives for early participants such as AI solution providers, computing resource providers, and validators.
 AI Network Roadmap
 A testnet of the AI Network blockchain will be launched in the second half of 2019, and the AI Network main-net will be launched in 2020.
 In the following months, AI Network will work with its community to gather feedback on the AI Network Blockchain prototype, and develop it further to a production-ready state.
