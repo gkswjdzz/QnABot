@@ -1,0 +1,62 @@
+openapi: 3.0.1
+info:
+  title: QnA-BOT
+  description: QnA bot powered by CoQA + BERT built in Pytorch.
+  contact:
+    email: hanjeong@comcom.ai
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  version: 1.0.0
+servers:
+- url: https://qnabot-cpu.gkswjdzz.endpoint.dev.ainize.ai
+tags:
+- name: BOT
+  description: talk with bot
+paths:
+  /chat:
+    get:
+      tags:
+      - BOT
+      summary: You can use parasite bot..
+      parameters:
+      - name: bot_id
+        in: query
+        description: write name of your bot
+        required: true
+        schema:
+          type: string
+          enum:
+            - parasite_all
+            - parasite_bongjunho
+            - parasite_GQ
+            - parasite_guardian
+            - parasite_intercom
+            - parasite_oscars
+            - parasite_vulture
+            - parasite_wiki
+            - parasite_goldderby
+            - DemoC_qna
+            - ain_all
+            - ain_arch
+            - ain_faq
+            - ain_glossary
+            - ain_sas
+            - ain_wp
+        example: parasite_all
+      - name: question
+        in: query
+        description: question
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Success!
+          content:
+            text/plain:
+              schema:
+                type: string
+        405:
+          description: Invalid input
+          content: {}
