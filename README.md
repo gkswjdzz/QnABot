@@ -1,6 +1,6 @@
 # QnABOT
 
-[![Run on Ainize](https://ainize-dev.herokuapp.com/static/images/run_on_ainize_button.svg)](https://ainize-dev.web.app/redirect?git_repo=github.com/gkswjdzz/qnabot)
+[![Run on Ainize](https://ainize-dev.herokuapp.com/static/images/run_on_ainize_button.svg)](https://ainize-dev.herokuapp.com/deployments/github.com/gkswjdzz/qnabot)
 
 ## Installation
 
