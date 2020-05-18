@@ -9,7 +9,7 @@ info:
     url: https://opensource.org/licenses/MIT
   version: 1.0.0
 servers:
-- url: https://qnabot-gpu.gkswjdzz.endpoint.dev.ainize.ai
+- url: https://qnabot-gpu.gkswjdzz.endpoint.ainize.ai
 tags:
 - name: BOT
   description: talk with bot
